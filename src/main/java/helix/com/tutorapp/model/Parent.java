@@ -30,7 +30,8 @@ public class Parent {
     private String gender;
     private int rank;
 
-
+    @OneToOne
+    private User user;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "parent_has_posts",

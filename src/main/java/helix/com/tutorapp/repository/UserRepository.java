@@ -6,11 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
-    public User findByUsername(String username);
-
-    User findByToken(String token);
+    public User findByUserName(String userName );
 
     User findById(Long id);
 
-//    List<User> findByClassroom(ClassRoom classRoom);//hic
+    User findByToken(String token);
 }
