@@ -15,7 +15,7 @@ public class PostByParent {
 
     @ManyToOne
     @JoinColumn(name = "tutor_id")
-    private Tutor tutor;
+    private Parent parent;
 
     private String subject;
     private String time;
@@ -64,12 +64,12 @@ public class PostByParent {
         this.postContent = postContent;
     }
 
-    public Tutor getTutor() {
-        return tutor;
+    public Parent parent() {
+        return parent;
     }
 
-    public void setTutor(Tutor tutor) {
-        this.tutor = tutor;
+    public void setTutor(Parent parent) {
+        this.parent = parent;
     }
 
     public String getSubject() {

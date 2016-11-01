@@ -33,8 +33,6 @@ public class Tutor {
 
     private int rank;
 
-    @OneToOne
-    private User user;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "tutor_has_posts",
