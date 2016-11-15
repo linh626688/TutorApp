@@ -1,21 +1,23 @@
 package helix.com.tutorapp.controller.dto;
 
+import helix.com.tutorapp.model.Role;
+
 /**
  * Created by helix on 10/18/2016.
  */
 public class UserDTO {
-    private String userName;
+    private String username;
     private String password;
     private Long id;
-    private String role;
+    private Role role;
     private String token;
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -34,11 +36,11 @@ public class UserDTO {
         this.id = id;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

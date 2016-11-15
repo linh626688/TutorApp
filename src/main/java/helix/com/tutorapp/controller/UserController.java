@@ -25,19 +25,21 @@ public class UserController {
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public User createUser(@RequestBody UserDTO user) {
-
         return userService.createUser(user);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public UserDTO checkLogin(@RequestBody UserDTO user) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("username", user.getUserName());
+        modelAndView.addObject("username", user.getUsername());
         return userService.doLogin(user);
     }
+
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public void logOut(HttpServletRequest request) {
         String token = request.getHeader("auth-token");
         userService.doLogout(token);
     }
+
+
 }
