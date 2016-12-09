@@ -18,6 +18,15 @@ public class PostByParent {
     private Parent parent;
 
     private String subject;
+
+    public Parent getParent() {
+        return parent;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
+    }
+
     private String time;
     private String timePost;
     private String status;
