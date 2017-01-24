@@ -46,16 +46,16 @@ public class TutorService {
         }
     }
 
-    public PostByTutorDTO createPost(String token, PostByTutorDTO tutorDTO) {
+    public PostByTutorDTO createPostTutor(String token, PostByTutorDTO tutorDTO) {
         return null;
     }
 
 
-    public PostByTutorDTO editPost(String token, Long id, PostByTutorDTO tutorDTO) {
+    public PostByTutorDTO editPostTutor(String token, Long id, PostByTutorDTO tutorDTO) {
         return null;
     }
 
-    public String deletePost(String token, Long id) {
+    public String deletePostTutor(String token, Long id) {
         return null;
     }
 }

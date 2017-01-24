@@ -27,26 +27,26 @@ public class ParentController {
     }
 
     // Create Post
-    @RequestMapping(value = "/createPost", method = RequestMethod.POST)
-    public PostByParentDTO createPost(@RequestBody PostByParentDTO parentDTO, HttpServletRequest request) {
+    @RequestMapping(value = "/createPostParent", method = RequestMethod.POST)
+    public PostByParentDTO createPostParent(@RequestBody PostByParentDTO parentDTO, HttpServletRequest request) {
         String token = request.getHeader("auth-token");
-        return parentService.createPost(token, parentDTO);
+        return parentService.createPostParent(token, parentDTO);
     }
 
 
     //Edit Post theo ID
-    @RequestMapping(value = "/editPost/{id}", method = RequestMethod.PUT)
-    public PostByParentDTO editPost(@PathVariable("id") Long id, @RequestBody PostByParentDTO parentDTO, HttpServletRequest request) {
+    @RequestMapping(value = "/editPostParent/{id}", method = RequestMethod.PUT)
+    public PostByParentDTO editPostParent(@PathVariable("id") Long id, @RequestBody PostByParentDTO parentDTO, HttpServletRequest request) {
         String token = request.getHeader("auth-token");
-        return parentService.editPost(token, id, parentDTO);
+        return parentService.editPostParent(token, id, parentDTO);
     }
 
 
     //delete Post theo ID
-    @RequestMapping(value = "/deletePost/{id}", method = RequestMethod.DELETE)
-    public String deletePost(@PathVariable("id") Long id, HttpServletRequest request) {
+    @RequestMapping(value = "/deletePostParent/{id}", method = RequestMethod.DELETE)
+    public String deletePostParent(@PathVariable("id") Long id, HttpServletRequest request) {
         String token = request.getHeader("auth-token");
-        return parentService.deletePost(token, id);
+        return parentService.deletePostParent(token, id);
     }
 
     //List all Post

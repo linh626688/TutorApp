@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ear" build-on-make="true" name="tutor">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="root" />
+  </artifact>
+</component>

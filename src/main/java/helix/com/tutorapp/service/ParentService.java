@@ -43,7 +43,7 @@ public class ParentService {
         }
     }
 
-    public PostByParentDTO createPost(String token, PostByParentDTO postParentDTO) {
+    public PostByParentDTO createPostParent(String token, PostByParentDTO postParentDTO) {
 
         User user = userRepository.findByToken(token);
         PostByParent postByParent = new PostByParent();
@@ -61,7 +61,26 @@ public class ParentService {
         return postParentDTO;
     }
 
-    public PostByParentDTO editPost(String token, Long id, PostByParentDTO postParentDTO) {
+    public PostByParentDTO editPostParent(String token, Long id, PostByParentDTO postParentDTO) {
+//        User user = userRepository.findByToken(token);
+//        ClassRoom classRoom = classRoomRepository.findById(id);
+//        if (classRoom.getUser() == user) {
+//            classRoom.setClassName(classroomDTO.getClassName());
+//            classRoomRepository.save(classRoom);
+//            return "Update Done";
+//        } else throw new NullPointerException("No Permission With Class");
+
+        User user = userRepository.findByToken(token);
+        PostByParent postByParent = postParentRepository.findById(id);
+        if (postByParent.getParent() == user.getParent()) {
+            postByParent.setPostContent(postParentDTO.getPostContent());
+            postByParent.setTime(postParentDTO.getTime());
+            postByParent.setStatus(postParentDTO.getStatus());
+            postByParent.setGender(postParentDTO.getGender());
+            postByParent.setLevel(postParentDTO.getLevel());
+            postByParent.setSubject(postParentDTO.getSubject());
+        }
+
         return null;
     }
 //
@@ -81,6 +100,10 @@ public class ParentService {
     }
 
     public List<PostByParentDTO> allPostByParent(Long id) {
+        return null;
+    }
+
+    public String deletePostParent(String token, Long id) {
         return null;
     }
 }

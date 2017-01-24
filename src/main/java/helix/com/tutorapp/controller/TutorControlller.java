@@ -36,22 +36,22 @@ public class TutorControlller {
 
     }
 
-    @RequestMapping(value = "/createPost", method = RequestMethod.POST)
-    public PostByTutorDTO createPost(@RequestBody PostByTutorDTO tutorDTO, HttpServletRequest request) {
+    @RequestMapping(value = "/createPostTutor", method = RequestMethod.POST)
+    public PostByTutorDTO createPostTutor(@RequestBody PostByTutorDTO tutorDTO, HttpServletRequest request) {
         String token = request.getHeader("auth-token");
-        return tutorService.createPost(token, tutorDTO);
+        return tutorService.createPostTutor(token, tutorDTO);
     }
 
-    @RequestMapping(value = "/editPost/{id}", method = RequestMethod.PUT)
-    public PostByTutorDTO editPost(@PathVariable("id") Long id, @RequestBody PostByTutorDTO tutorDTO, HttpServletRequest request) {
+    @RequestMapping(value = "/editPostTutor/{id}", method = RequestMethod.PUT)
+    public PostByTutorDTO editPostTutor(@PathVariable("id") Long id, @RequestBody PostByTutorDTO tutorDTO, HttpServletRequest request) {
         String token = request.getHeader("auth-token");
-        return tutorService.editPost(token, id, tutorDTO);
+        return tutorService.editPostTutor(token, id, tutorDTO);
     }
 
-    @RequestMapping(value = "/deletePost/{id}",method = RequestMethod.DELETE)
-    public String deletePost(@PathVariable("id") Long id,HttpServletRequest request){
+    @RequestMapping(value = "/deletePostTutor/{id}",method = RequestMethod.DELETE)
+    public String deletePostTutor(@PathVariable("id") Long id,HttpServletRequest request){
         String token = request.getHeader("auth-token");
-        return tutorService.deletePost(token, id);
+        return tutorService.deletePostTutor(token, id);
     }
 
 }
