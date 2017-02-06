@@ -1,9 +1,8 @@
 package helix.com.tutorapp.controller;
 
-import helix.com.tutorapp.controller.dto.ParentDTO;
-import helix.com.tutorapp.controller.dto.PostByParentDTO;
-import helix.com.tutorapp.controller.dto.TutorDTO;
-import helix.com.tutorapp.service.ParentService;
+import helix.com.tutorapp.dto.ParentDTO;
+import helix.com.tutorapp.dto.PostByParentDTO;
+import helix.com.tutorapp.service.impl.ParentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +13,6 @@ import java.util.List;
  * Created by helix on 11/1/2016.
  */
 @RestController
-@SessionAttributes
 public class ParentController {
     @Autowired
     private ParentService parentService;

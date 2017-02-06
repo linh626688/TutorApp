@@ -1,9 +1,8 @@
 package helix.com.tutorapp.controller;
 
-import helix.com.tutorapp.controller.dto.PostByTutorDTO;
-import helix.com.tutorapp.controller.dto.TutorDTO;
-import helix.com.tutorapp.model.PostByTutor;
-import helix.com.tutorapp.service.TutorService;
+import helix.com.tutorapp.dto.PostByTutorDTO;
+import helix.com.tutorapp.dto.TutorDTO;
+import helix.com.tutorapp.service.impl.TutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
  * Created by helix on 11/1/2016.
  */
 @RestController
-@SessionAttributes
 public class TutorControlller {
     @Autowired
     private TutorService tutorService;

@@ -1,8 +1,8 @@
 package helix.com.tutorapp.controller;
 
-import helix.com.tutorapp.controller.dto.UserDTO;
-import helix.com.tutorapp.model.User;
-import helix.com.tutorapp.service.UserService;
+import helix.com.tutorapp.dto.UserDTO;
+import helix.com.tutorapp.model.entity.User;
+import helix.com.tutorapp.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
  * Created by helix on 10/14/2016.
  */
 @RestController
-@SessionAttributes
 public class UserController {
     @Autowired
     private UserService userService;
