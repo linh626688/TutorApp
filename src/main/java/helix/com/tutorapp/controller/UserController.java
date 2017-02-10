@@ -1,5 +1,6 @@
 package helix.com.tutorapp.controller;
 
+import helix.com.tutorapp.dto.RoleDTO;
 import helix.com.tutorapp.dto.UserDTO;
 import helix.com.tutorapp.model.entity.User;
 import helix.com.tutorapp.service.impl.UserService;
@@ -33,6 +34,13 @@ public class UserController {
         modelAndView.addObject("username", user.getUsername());
         return userService.doLogin(user);
     }
+
+    @RequestMapping(value = "/addRole", method = RequestMethod.POST)
+    public void addRole(HttpServletRequest request, @RequestBody RoleDTO role) {
+        String token = request.getHeader("auth-token");
+        userService.setRoleUser(role,token);
+    }
+
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public void logOut(HttpServletRequest request) {

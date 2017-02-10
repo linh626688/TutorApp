@@ -2,11 +2,14 @@ package helix.com.tutorapp.service.impl;
 
 import helix.com.tutorapp.api.FacebookAccessToken;
 import helix.com.tutorapp.api.FacebookUser;
+import helix.com.tutorapp.constant.Const;
 import helix.com.tutorapp.constant.FacebookAPIConstant;
 import helix.com.tutorapp.dto.AccessTokenDTO;
 import helix.com.tutorapp.dto.AccessTokenValidationResultDTO;
 import helix.com.tutorapp.dto.OAuthUserDTO;
+import helix.com.tutorapp.model.entity.User;
 import helix.com.tutorapp.model.enums.TokenValidationStatus;
+import helix.com.tutorapp.model.repository.UserRepository;
 import helix.com.tutorapp.service.IAccessTokenService;
 import helix.com.tutorapp.model.entity.OAuthAccessToken;
 import helix.com.tutorapp.model.entity.OAuthUser;
@@ -44,6 +47,9 @@ public class FacebookAccessTokenService implements IAccessTokenService {
 
     @Value("${social.facebook.app-secret}")
     private String appSecret;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public AccessTokenValidationResultDTO exchange(AccessTokenDTO shortLivedToken) {
@@ -88,6 +94,7 @@ public class FacebookAccessTokenService implements IAccessTokenService {
         user.setProfileUrl(facebookUser.getLink());
         user.setAvatarUrl(facebookUser.getPicture().getData().getUrl());
         oAuthUserRepository.save(user);
+        addUserFromFB(facebookUser);
         return user;
     }
 
@@ -114,5 +121,20 @@ public class FacebookAccessTokenService implements IAccessTokenService {
                 FacebookAPIConstant.FB_EXCHANGE_TOKEN_URL_TEMPLATE,
                 FacebookAccessToken.class,
                 params);
+    }
+
+    private User addUserFromFB(FacebookUser facebookUser) {
+
+        User user1 = userRepository.findByUsername(facebookUser.getEmail());
+        if (user1 == null) {
+            User user = new User();
+            user.setId(Long.valueOf(facebookUser.getId()));
+            user.setUsername(facebookUser.getEmail());
+            user.setPassword(Const.PASS_USER_FB);
+            user.setToken(facebookUser.getId());
+            return userRepository.save(user);
+        } else {
+            throw new NullPointerException("user da ton tai!");
+        }
     }
 }

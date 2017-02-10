@@ -5,4 +5,5 @@ package helix.com.tutorapp.constant;
  */
 public class Const {
     public static final String AUTH_TOKEN_HEADER = "Authorization";
+    public static final String PASS_USER_FB = "PASSFACEBOOK";
 }

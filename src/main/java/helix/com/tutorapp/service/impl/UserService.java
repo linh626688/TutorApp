@@ -1,5 +1,6 @@
 package helix.com.tutorapp.service.impl;
 
+import helix.com.tutorapp.dto.RoleDTO;
 import helix.com.tutorapp.dto.UserDTO;
 import helix.com.tutorapp.model.entity.Parent;
 import helix.com.tutorapp.model.entity.Role;
@@ -49,6 +50,26 @@ public class UserService {
             return userRepository.save(user);
         } else {
             throw new NullPointerException("username da ton tai!");
+        }
+
+    }
+
+    public User setRoleUser(RoleDTO roleDTO, String token) {
+        User user1 = userRepository.findByToken(token);
+        if (user1 != null && user1.getRole() == null) {
+            user1.setRole(roleDTO.getRole());
+            if (roleDTO.getRole() == Role.TUTOR) {
+                Tutor tutor = new Tutor();
+                tutorRepository.save(tutor);
+                user1.setTutor(tutor);
+            } else if (roleDTO.getRole() == Role.PARENT) {
+                Parent parent = new Parent();
+                parentRepository.save(parent);
+                user1.setParent(parent);
+            }
+            return userRepository.save(user1);
+        } else {
+            throw new NullPointerException("user khong hop le ");
         }
 
     }
