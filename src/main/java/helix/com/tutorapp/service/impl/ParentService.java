@@ -11,6 +11,7 @@ import helix.com.tutorapp.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +35,6 @@ public class ParentService {
             parent.setGender(parentDTO.getGender());
             parent.setLocation(parentDTO.getLocation());
             parent = parentRepository.save(parent);
-//            parentDTO1.setLastName(tutor.getLastName());
             return parentDTO;
         } else {
             throw new NullPointerException("Parent khong ton tai");
@@ -60,14 +60,6 @@ public class ParentService {
     }
 
     public PostByParentDTO editPostParent(String token, Long id, PostByParentDTO postParentDTO) {
-//        User user = userRepository.findByToken(token);
-//        ClassRoom classRoom = classRoomRepository.findById(id);
-//        if (classRoom.getUser() == user) {
-//            classRoom.setClassName(classroomDTO.getClassName());
-//            classRoomRepository.save(classRoom);
-//            return "Update Done";
-//        } else throw new NullPointerException("No Permission With Class");
-
         User user = userRepository.findByToken(token);
         PostByParent postByParent = postParentRepository.findById(id);
         if (postByParent.getParent() == user.getParent()) {
@@ -79,7 +71,7 @@ public class ParentService {
             postByParent.setSubject(postParentDTO.getSubject());
         }
 
-        return null;
+        return postParentDTO;
     }
 //
 //    public String deletePost(String token, Long id) {
@@ -94,7 +86,19 @@ public class ParentService {
 //}
 
     public List<PostByParentDTO> allPostParent() {
-        return null;
+        List<PostByParent> postByParentList = (List<PostByParent>) postParentRepository.findAll();
+        List<PostByParentDTO> postByParentDTOs = new ArrayList<PostByParentDTO>();
+        for (PostByParent postByParent : postByParentList) {
+            PostByParentDTO postByParentDTO = new PostByParentDTO();
+            postByParentDTO.setPostContent(postByParent.getPostContent());
+            postByParentDTO.setTime(postByParent.getTime());
+            postByParentDTO.setStatus(postByParent.getStatus());
+            postByParentDTO.setGender(postByParent.getGender());
+            postByParentDTO.setLevel(postByParent.getLevel());
+            postByParentDTO.setSubject(postByParent.getSubject());
+            postByParentDTOs.add(postByParentDTO);
+        }
+        return postByParentDTOs;
     }
 
     public List<PostByParentDTO> allPostByParent(Long id) {
@@ -102,6 +106,8 @@ public class ParentService {
     }
 
     public String deletePostParent(String token, Long id) {
+
+
         return null;
     }
 }

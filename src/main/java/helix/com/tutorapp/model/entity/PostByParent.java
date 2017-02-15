@@ -14,7 +14,7 @@ public class PostByParent {
 
 
     @ManyToOne
-    @JoinColumn(name = "tutor_id")
+    @JoinColumn(name = "parent_id")
     private Parent parent;
 
     private String subject;
