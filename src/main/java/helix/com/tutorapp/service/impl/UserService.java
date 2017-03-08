@@ -11,7 +11,12 @@ import helix.com.tutorapp.model.repository.TutorRepository;
 import helix.com.tutorapp.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.UUID;
 
@@ -20,6 +25,8 @@ import java.util.UUID;
  */
 @Service
 public class UserService {
+    private static String UPLOADED_FOLDER = "D://temp//";
+
     @Autowired
     private UserRepository userRepository;
 
@@ -106,4 +113,23 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public String setAvatar(String token, MultipartFile multipartFile) {
+        User user = userRepository.findByToken(token);
+        if (multipartFile.isEmpty()) {
+            return "Null";
+        }
+        try {
+            byte[] bytes = multipartFile.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
+            Files.write(path, bytes);
+            System.out.println(path);
+            user.setAvatar(path.toString());
+            System.out.println(user.getAvatar());
+            userRepository.save(user);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
+    }
 }

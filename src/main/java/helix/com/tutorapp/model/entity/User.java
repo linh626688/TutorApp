@@ -19,12 +19,21 @@ public class User {
     private String token;
 
     private Date tokenExpiry;
+    private String avatar;
 
     @OneToOne
     private Tutor tutor;
 
     @OneToOne
     private Parent parent;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public Tutor getTutor() {
         return tutor;

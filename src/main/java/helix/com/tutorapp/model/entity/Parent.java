@@ -23,7 +23,7 @@ public class Parent {
     private String token;
     private Date tokenExpiry;
     private String state;
-    private String ava;
+
     private String gender;
     private int rank;
     private String location;
@@ -108,13 +108,7 @@ public class Parent {
         this.state = state;
     }
 
-    public String getAva() {
-        return ava;
-    }
 
-    public void setAva(String ava) {
-        this.ava = ava;
-    }
 
     public String getGender() {
         return gender;

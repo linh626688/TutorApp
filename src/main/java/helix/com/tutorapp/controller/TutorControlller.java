@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by helix on 11/1/2016.
@@ -46,10 +47,24 @@ public class TutorControlller {
         return tutorService.editPostTutor(token, id, tutorDTO);
     }
 
-    @RequestMapping(value = "/deletePostTutor/{id}",method = RequestMethod.DELETE)
-    public String deletePostTutor(@PathVariable("id") Long id,HttpServletRequest request){
+    //delete Post theo ID
+    @RequestMapping(value = "/deletePostTutor/{id}", method = RequestMethod.DELETE)
+    public String deletePostTutor(@PathVariable("id") Long id, HttpServletRequest request) {
         String token = request.getHeader("auth-token");
         return tutorService.deletePostTutor(token, id);
+    }
+
+    //List all Post
+    @RequestMapping(value = "/allPostTutor",method = RequestMethod.GET)
+    public List<PostByTutorDTO> allPostTutor(){
+        return tutorService.allPostTutor();
+    }
+
+
+    //list all Post by Tutor
+    @RequestMapping(value = "/allPostByTutor/{id_Tutor}",method = RequestMethod.GET)
+    public List<PostByTutorDTO> allPostByTutor(@PathVariable("id_Tutor") Long idTutor){
+        return tutorService.allPostByTutor(idTutor);
     }
 
 }

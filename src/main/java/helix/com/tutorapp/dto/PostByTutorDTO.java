@@ -10,6 +10,15 @@ public class PostByTutorDTO {
     private String subject;
     private String time;
     private String timePost;
+    private String money;
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
+    }
 
     public Long getId() {
         return id;

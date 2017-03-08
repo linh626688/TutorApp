@@ -13,7 +13,6 @@ public class TutorDTO {
     private String token;
     private Date tokenExpiry;
     private String state;
-    private String ava;
     private String fristName;
     private String lastName;
 
@@ -61,14 +60,6 @@ public class TutorDTO {
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public String getAva() {
-        return ava;
-    }
-
-    public void setAva(String ava) {
-        this.ava = ava;
     }
 
     public String getGender() {

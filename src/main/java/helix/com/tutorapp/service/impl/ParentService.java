@@ -31,7 +31,6 @@ public class ParentService {
         Parent parent = parentRepository.findById(id);
         ParentDTO parentDTO1 = new ParentDTO();
         if (user.getParent() == parent) {
-            parent.setAva(parentDTO.getAva());
             parent.setGender(parentDTO.getGender());
             parent.setLocation(parentDTO.getLocation());
             parent = parentRepository.save(parent);
@@ -73,17 +72,7 @@ public class ParentService {
 
         return postParentDTO;
     }
-//
-//    public String deletePost(String token, Long id) {
-//        User user = userRepository.findByToken(token);
-//        PostByParent postByParent = postParentRepository.findById(id);
-//        if (postByParent.getParent().equals(user)) {
-////            postParentRepository.delete(classRoom);
-//            return "Delete Success";
-//        } else return "Not Permission";
-//    }
-//
-//}
+
 
     public List<PostByParentDTO> allPostParent() {
         List<PostByParent> postByParentList = (List<PostByParent>) postParentRepository.findAll();
@@ -101,13 +90,37 @@ public class ParentService {
         return postByParentDTOs;
     }
 
-    public List<PostByParentDTO> allPostByParent(Long id) {
-        return null;
+    public List<PostByParentDTO> allPostByParent(Long idParent) {
+        if (parentRepository.findById(idParent) != null) {
+            List<PostByParent> arrPost = postParentRepository.findByParentId(idParent);
+            List<PostByParentDTO> postByParentDTOs = new ArrayList<PostByParentDTO>();
+            for (PostByParent postByParent : arrPost) {
+                PostByParentDTO postByParentDTO = new PostByParentDTO();
+                postByParentDTO.setPostContent(postByParent.getPostContent());
+                postByParentDTO.setTime(postByParent.getTime());
+                postByParentDTO.setStatus(postByParent.getStatus());
+                postByParentDTO.setGender(postByParent.getGender());
+                postByParentDTO.setLevel(postByParent.getLevel());
+                postByParentDTO.setSubject(postByParent.getSubject());
+                postByParentDTOs.add(postByParentDTO);
+            }
+            return postByParentDTOs;
+        } else throw new NullPointerException("Parent khong ton tai");
+
     }
 
     public String deletePostParent(String token, Long id) {
+        User user = userRepository.findByToken(token);
 
+        if (postParentRepository.findById(id) != null) {
+            PostByParent postByParent = postParentRepository.findById(id);
+            if (postByParent.getParent().equals(user.getParent())) {
+                postParentRepository.delete(postByParent);
+                return "Delete Success";
+            } else {
+                return "Not Permission";
+            }
+        } else return "No Post this id";
 
-        return null;
     }
 }

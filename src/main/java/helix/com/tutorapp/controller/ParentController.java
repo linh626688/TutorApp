@@ -55,8 +55,8 @@ public class ParentController {
 
 
     //list all Post by Parent
-    @RequestMapping(value = "/allPostByParent/{id}",method = RequestMethod.GET)
-    public List<PostByParentDTO> allPostByParent(@PathVariable("id") Long id){
-        return parentService.allPostByParent(id);
+    @RequestMapping(value = "/allPostByParent/{id_parent}",method = RequestMethod.GET)
+    public List<PostByParentDTO> allPostByParent(@PathVariable("id_parent") Long idParent){
+        return parentService.allPostByParent(idParent);
     }
 }

@@ -14,7 +14,6 @@ public class ParentDTO {
     private String token;
     private Date tokenExpiry;
     private String state;
-    private String ava;
     private String gender;
     private int rank;
     private String location;
@@ -65,14 +64,6 @@ public class ParentDTO {
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public String getAva() {
-        return ava;
-    }
-
-    public void setAva(String ava) {
-        this.ava = ava;
     }
 
     public String getGender() {
