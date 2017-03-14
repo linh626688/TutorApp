@@ -15,12 +15,30 @@ public class TutorDTO {
     private String state;
     private String fristName;
     private String lastName;
+    private String currentJob;
+    private String birth;
 
     private String location;
 
     private int rank;
 
     private String gender;
+
+    public String getCurrentJob() {
+        return currentJob;
+    }
+
+    public void setCurrentJob(String currentJob) {
+        this.currentJob = currentJob;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
 
     public Long getId() {
         return id;

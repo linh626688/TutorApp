@@ -31,7 +31,6 @@ public class ParentService {
         Parent parent = parentRepository.findById(id);
         ParentDTO parentDTO1 = new ParentDTO();
         if (user.getParent() == parent) {
-            parent.setGender(parentDTO.getGender());
             parent.setLocation(parentDTO.getLocation());
             parent = parentRepository.save(parent);
             return parentDTO;
@@ -52,6 +51,9 @@ public class ParentService {
         postByParent.setTime(postParentDTO.getTime());
         postByParent.setSubject(postParentDTO.getSubject());
         postByParent.setStatus(postParentDTO.getStatus());
+        postByParent.setContact(postParentDTO.getContact());
+        postByParent.setSalaryDesired(postParentDTO.getSalaryDesired());
+        postByParent.setLocationDesired(postParentDTO.getLocationDesired());
 
         postByParent = postParentRepository.save(postByParent);
 
@@ -68,6 +70,9 @@ public class ParentService {
             postByParent.setGender(postParentDTO.getGender());
             postByParent.setLevel(postParentDTO.getLevel());
             postByParent.setSubject(postParentDTO.getSubject());
+            postByParent.setContact(postParentDTO.getContact());
+            postByParent.setSalaryDesired(postParentDTO.getSalaryDesired());
+            postByParent.setLocationDesired(postParentDTO.getLocationDesired());
         }
 
         return postParentDTO;
@@ -85,6 +90,9 @@ public class ParentService {
             postByParentDTO.setGender(postByParent.getGender());
             postByParentDTO.setLevel(postByParent.getLevel());
             postByParentDTO.setSubject(postByParent.getSubject());
+            postByParentDTO.setContact(postByParent.getContact());
+            postByParentDTO.setSalaryDesired(postByParent.getSalaryDesired());
+            postByParentDTO.setLocationDesired(postByParent.getLocationDesired());
             postByParentDTOs.add(postByParentDTO);
         }
         return postByParentDTOs;
@@ -102,6 +110,9 @@ public class ParentService {
                 postByParentDTO.setGender(postByParent.getGender());
                 postByParentDTO.setLevel(postByParent.getLevel());
                 postByParentDTO.setSubject(postByParent.getSubject());
+                postByParentDTO.setContact(postByParent.getContact());
+                postByParentDTO.setSalaryDesired(postByParent.getSalaryDesired());
+                postByParentDTO.setLocationDesired(postByParent.getLocationDesired());
                 postByParentDTOs.add(postByParentDTO);
             }
             return postByParentDTOs;

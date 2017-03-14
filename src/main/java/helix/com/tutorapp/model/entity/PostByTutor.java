@@ -10,26 +10,16 @@ public class PostByTutor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String postContent;
-
 
     @ManyToOne
     @JoinColumn(name = "tutor_id")
     private Tutor tutor;
-
-
     private String subject;
     private String time;
     private String timePost;
-    private String money;
-
-    public String getMoney() {
-        return money;
-    }
-
-    public void setMoney(String money) {
-        this.money = money;
-    }
+    private String salary;
+    private String area;
+    private String about;
 
     public Long getId() {
         return id;
@@ -39,12 +29,28 @@ public class PostByTutor {
         this.id = id;
     }
 
-    public String getPostContent() {
-        return postContent;
+    public String getSalary() {
+        return salary;
     }
 
-    public void setPostContent(String postContent) {
-        this.postContent = postContent;
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     public Tutor getTutor() {

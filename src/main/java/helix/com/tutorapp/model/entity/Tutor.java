@@ -21,6 +21,9 @@ public class Tutor {
     private Date tokenExpiry;
     private String state;
     private String gender;
+    private String currentJob;
+    private String birth;
+
 
     private String fristName;
     private String lastName;
@@ -41,6 +44,21 @@ public class Tutor {
     )
     private List<PostByTutor> postByTutor = new ArrayList<PostByTutor>();
 
+    public String getCurrentJob() {
+        return currentJob;
+    }
+
+    public void setCurrentJob(String currentJob) {
+        this.currentJob = currentJob;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
 
     public List<PostByTutor> getPosts() {
         return postByTutor;
@@ -65,6 +83,7 @@ public class Tutor {
     public String getToken() {
         return token;
     }
+
 
     public void setToken(String token) {
         this.token = token;

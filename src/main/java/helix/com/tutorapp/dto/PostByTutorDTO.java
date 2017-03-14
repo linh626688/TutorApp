@@ -5,19 +5,37 @@ package helix.com.tutorapp.dto;
  */
 public class PostByTutorDTO {
     private Long id;
-    private String postContent;
-
     private String subject;
     private String time;
     private String timePost;
-    private String money;
 
-    public String getMoney() {
-        return money;
+    private String salary;
+    private String area;
+    private String about;
+
+
+    public String getSalary() {
+        return salary;
     }
 
-    public void setMoney(String money) {
-        this.money = money;
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     public Long getId() {
@@ -26,14 +44,6 @@ public class PostByTutorDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getPostContent() {
-        return postContent;
-    }
-
-    public void setPostContent(String postContent) {
-        this.postContent = postContent;
     }
 
     public String getSubject() {

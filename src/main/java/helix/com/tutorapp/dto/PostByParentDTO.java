@@ -5,9 +5,8 @@ package helix.com.tutorapp.dto;
  */
 public class PostByParentDTO {
     private Long id;
+
     private String postContent;
-
-
     private String subject;
     private String time;
     private String timePost;
@@ -15,12 +14,40 @@ public class PostByParentDTO {
     private String gender;
     private String level;
 
+    private String contact;
+    private String salaryDesired;
+    private String locationDesired;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getSalaryDesired() {
+        return salaryDesired;
+    }
+
+    public void setSalaryDesired(String salaryDesired) {
+        this.salaryDesired = salaryDesired;
+    }
+
+    public String getLocationDesired() {
+        return locationDesired;
+    }
+
+    public void setLocationDesired(String locationDesired) {
+        this.locationDesired = locationDesired;
     }
 
     public String getPostContent() {

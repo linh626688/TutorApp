@@ -45,6 +45,8 @@ public class TutorService {
             tutor.setFristName(tutorDTO.getFristName());
             tutor.setLastName(tutorDTO.getLastName());
             tutor.setGender(tutorDTO.getGender());
+            tutor.setBirth(tutorDTO.getBirth());
+            tutor.setCurrentJob(tutorDTO.getCurrentJob());
             tutor.setLocation(tutorDTO.getLocation());
             tutor = tutorRepository.save(tutor);
             tutorDTO1.setLastName(tutor.getLastName());
@@ -59,8 +61,9 @@ public class TutorService {
         PostByTutor postByTutor = new PostByTutor();
         postByTutor.setTutor(user.getTutor());
         postByTutor.setTimePost(tutorDTO.getTimePost());
-        postByTutor.setMoney(tutorDTO.getMoney());
-        postByTutor.setPostContent(tutorDTO.getPostContent());
+        postByTutor.setArea(tutorDTO.getArea());
+        postByTutor.setSalary(tutorDTO.getSalary());
+        postByTutor.setAbout(tutorDTO.getAbout());
         postByTutor.setTimePost(tutorDTO.getTimePost());
         postByTutor.setTime(tutorDTO.getTime());
         postByTutor.setSubject(tutorDTO.getSubject());
@@ -77,8 +80,9 @@ public class TutorService {
         PostByTutor postByTutor = postTutorRepository.findById(id);
         if (postByTutor.getTutor() == user.getTutor()) {
             postByTutor.setTimePost(tutorDTO.getTimePost());
-            postByTutor.setMoney(tutorDTO.getMoney());
-            postByTutor.setPostContent(tutorDTO.getPostContent());
+            postByTutor.setArea(tutorDTO.getArea());
+            postByTutor.setSalary(tutorDTO.getSalary());
+            postByTutor.setAbout(tutorDTO.getAbout());
             postByTutor.setTimePost(tutorDTO.getTimePost());
             postByTutor.setTime(tutorDTO.getTime());
             postByTutor.setSubject(tutorDTO.getSubject());
@@ -106,10 +110,11 @@ public class TutorService {
         List<PostByTutorDTO> postByTutorDTOs = new ArrayList<PostByTutorDTO>();
         for (PostByTutor postByTutor : postByTutorList) {
             PostByTutorDTO postByTutorDTO = new PostByTutorDTO();
-            postByTutorDTO.setPostContent(postByTutor.getPostContent());
             postByTutorDTO.setTime(postByTutor.getTime());
+            postByTutorDTO.setArea(postByTutor.getArea());
+            postByTutorDTO.setSalary(postByTutor.getSalary());
+            postByTutorDTO.setAbout(postByTutor.getAbout());
             postByTutorDTO.setTimePost(postByTutor.getTimePost());
-            postByTutorDTO.setMoney(postByTutor.getMoney());
             postByTutorDTO.setSubject(postByTutor.getSubject());
             postByTutorDTOs.add(postByTutorDTO);
         }
@@ -123,10 +128,11 @@ public class TutorService {
             List<PostByTutorDTO> postByTutorDTOs = new ArrayList<PostByTutorDTO>();
             for (PostByTutor postByTutor : arrPost) {
                 PostByTutorDTO postByTutorDTO = new PostByTutorDTO();
-                postByTutorDTO.setPostContent(postByTutor.getPostContent());
                 postByTutorDTO.setTime(postByTutor.getTime());
                 postByTutorDTO.setTimePost(postByTutor.getTimePost());
-                postByTutorDTO.setMoney(postByTutor.getMoney());
+                postByTutorDTO.setArea(postByTutor.getArea());
+                postByTutorDTO.setSalary(postByTutor.getSalary());
+                postByTutorDTO.setAbout(postByTutor.getAbout());
                 postByTutorDTO.setSubject(postByTutor.getSubject());
                 postByTutorDTOs.add(postByTutorDTO);
             }

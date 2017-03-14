@@ -12,12 +12,21 @@ public class PostByParent {
     private Long id;
     private String postContent;
 
-
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Parent parent;
 
     private String subject;
+
+    private String time;
+    private String timePost;
+    private String status;
+    private String gender;
+    private String level;
+    private String contact;
+    private String salaryDesired;
+    private String locationDesired;
+
 
     public Parent getParent() {
         return parent;
@@ -27,11 +36,29 @@ public class PostByParent {
         this.parent = parent;
     }
 
-    private String time;
-    private String timePost;
-    private String status;
-    private String gender;
-    private String level;
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getSalaryDesired() {
+        return salaryDesired;
+    }
+
+    public void setSalaryDesired(String salaryDesỉed) {
+        this.salaryDesired = salaryDesỉed;
+    }
+
+    public String getLocationDesired() {
+        return locationDesired;
+    }
+
+    public void setLocationDesired(String locationDesired) {
+        this.locationDesired = locationDesired;
+    }
 
     public String getStatus() {
         return status;

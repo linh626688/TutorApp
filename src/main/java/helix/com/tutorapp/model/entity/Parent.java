@@ -22,10 +22,6 @@ public class Parent {
     private Role role;
     private String token;
     private Date tokenExpiry;
-    private String state;
-
-    private String gender;
-    private int rank;
     private String location;
 
     public String getLocation() {
@@ -98,32 +94,6 @@ public class Parent {
 
     public void setTokenExpiry(Date tokenExpiry) {
         this.tokenExpiry = tokenExpiry;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
     }
 
     public List<PostByParent> getPostByParent() {
