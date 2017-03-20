@@ -10,23 +10,66 @@ public class PostByParent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String postContent;
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Parent parent;
 
-    private String subject;
-
-    private String time;
     private String timePost;
-    private String status;
-    private String gender;
-    private String level;
+
+    private String classRequirement;
+
     private String contact;
+
+    private String classLevel;
+    private String times;
+    private String subject;
+    private String period;
+
     private String salaryDesired;
+
     private String locationDesired;
 
+
+    public String getClassLevel() {
+        return classLevel;
+    }
+
+    public void setClassLevel(String classLevel) {
+        this.classLevel = classLevel;
+    }
+
+    public String getTimes() {
+        return times;
+    }
+
+    public void setTimes(String times) {
+        this.times = times;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
+
+    public String getClassRequirement() {
+        return classRequirement;
+    }
+
+    public void setClassRequirement(String classRequirement) {
+        this.classRequirement = classRequirement;
+    }
 
     public Parent getParent() {
         return parent;
@@ -60,30 +103,6 @@ public class PostByParent {
         this.locationDesired = locationDesired;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
     public Long getId() {
         return id;
     }
@@ -92,36 +111,12 @@ public class PostByParent {
         this.id = id;
     }
 
-    public String getPostContent() {
-        return postContent;
-    }
-
-    public void setPostContent(String postContent) {
-        this.postContent = postContent;
-    }
-
     public Parent parent() {
         return parent;
     }
 
     public void setTutor(Parent parent) {
         this.parent = parent;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public String getTimePost() {

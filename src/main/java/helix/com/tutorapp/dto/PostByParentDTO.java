@@ -5,18 +5,47 @@ package helix.com.tutorapp.dto;
  */
 public class PostByParentDTO {
     private Long id;
-
-    private String postContent;
-    private String subject;
-    private String time;
     private String timePost;
-    private String status;
-    private String gender;
-    private String level;
-
+    private String classRequirement;
     private String contact;
     private String salaryDesired;
     private String locationDesired;
+    private String classLevel;
+    private String period;
+    private String times;
+    private String subject;
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getTimes() {
+        return times;
+    }
+
+    public void setTimes(String times) {
+        this.times = times;
+    }
+
+    public String getClassLevel() {
+        return classLevel;
+    }
+
+    public void setClassLevel(String classLevel) {
+        this.classLevel = classLevel;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
 
     public Long getId() {
         return id;
@@ -50,30 +79,6 @@ public class PostByParentDTO {
         this.locationDesired = locationDesired;
     }
 
-    public String getPostContent() {
-        return postContent;
-    }
-
-    public void setPostContent(String postContent) {
-        this.postContent = postContent;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
     public String getTimePost() {
         return timePost;
     }
@@ -82,27 +87,11 @@ public class PostByParentDTO {
         this.timePost = timePost;
     }
 
-    public String getStatus() {
-        return status;
+    public String getClassRequirement() {
+        return classRequirement;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
+    public void setClassRequirement(String classRequirement) {
+        this.classRequirement = classRequirement;
     }
 }

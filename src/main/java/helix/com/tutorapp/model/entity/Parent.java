@@ -2,7 +2,6 @@ package helix.com.tutorapp.model.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,13 +14,10 @@ public class Parent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String fristName;
-    private String lastName;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     private Role role;
-    private String token;
-    private Date tokenExpiry;
     private String location;
 
     public String getLocation() {
@@ -56,20 +52,12 @@ public class Parent {
         this.id = id;
     }
 
-    public String getFristName() {
-        return fristName;
+    public String getName() {
+        return name;
     }
 
-    public void setFristName(String fristName) {
-        this.fristName = fristName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Role getRole() {
@@ -78,22 +66,6 @@ public class Parent {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public Date getTokenExpiry() {
-        return tokenExpiry;
-    }
-
-    public void setTokenExpiry(Date tokenExpiry) {
-        this.tokenExpiry = tokenExpiry;
     }
 
     public List<PostByParent> getPostByParent() {

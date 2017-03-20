@@ -2,7 +2,6 @@ package helix.com.tutorapp.model.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,21 +16,16 @@ public class Tutor {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-    private String token;
-    private Date tokenExpiry;
-    private String state;
+
     private String gender;
     private String currentJob;
     private String birth;
 
 
-    private String fristName;
-    private String lastName;
+    private String name;
+
 
     private String location;
-
-    private int rank;
-
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "tutor_has_posts",
@@ -80,31 +74,6 @@ public class Tutor {
         this.role = role;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public Date getTokenExpiry() {
-        return tokenExpiry;
-    }
-
-    public void setTokenExpiry(Date tokenExpiry) {
-        this.tokenExpiry = tokenExpiry;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
     public String getGender() {
         return gender;
     }
@@ -121,28 +90,12 @@ public class Tutor {
         this.postByTutor = postByTutor;
     }
 
-    public int getRank() {
-        return rank;
+    public String getName() {
+        return name;
     }
 
-    public void setRank(int rank) {
-        this.rank = rank;
-    }
-
-    public String getFristName() {
-        return fristName;
-    }
-
-    public void setFristName(String fristName) {
-        this.fristName = fristName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLocation() {

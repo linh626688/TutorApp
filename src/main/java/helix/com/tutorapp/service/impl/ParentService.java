@@ -44,16 +44,15 @@ public class ParentService {
         User user = userRepository.findByToken(token);
         PostByParent postByParent = new PostByParent();
         postByParent.setParent(user.getParent());
-        postByParent.setLevel(postParentDTO.getLevel());
-        postByParent.setGender(postParentDTO.getGender());
-        postByParent.setPostContent(postParentDTO.getPostContent());
         postByParent.setTimePost(postParentDTO.getTimePost());
-        postByParent.setTime(postParentDTO.getTime());
-        postByParent.setSubject(postParentDTO.getSubject());
-        postByParent.setStatus(postParentDTO.getStatus());
         postByParent.setContact(postParentDTO.getContact());
         postByParent.setSalaryDesired(postParentDTO.getSalaryDesired());
         postByParent.setLocationDesired(postParentDTO.getLocationDesired());
+        postByParent.setTimes(postParentDTO.getTimes());
+        postByParent.setClassRequirement(postParentDTO.getClassRequirement());
+        postByParent.setPeriod(postParentDTO.getPeriod());
+        postByParent.setClassLevel(postParentDTO.getClassLevel());
+        postByParent.setSubject(postParentDTO.getSubject());
 
         postByParent = postParentRepository.save(postByParent);
 
@@ -64,15 +63,19 @@ public class ParentService {
         User user = userRepository.findByToken(token);
         PostByParent postByParent = postParentRepository.findById(id);
         if (postByParent.getParent() == user.getParent()) {
-            postByParent.setPostContent(postParentDTO.getPostContent());
-            postByParent.setTime(postParentDTO.getTime());
-            postByParent.setStatus(postParentDTO.getStatus());
-            postByParent.setGender(postParentDTO.getGender());
-            postByParent.setLevel(postParentDTO.getLevel());
-            postByParent.setSubject(postParentDTO.getSubject());
+            postByParent.setTimePost(postParentDTO.getTimePost());
             postByParent.setContact(postParentDTO.getContact());
             postByParent.setSalaryDesired(postParentDTO.getSalaryDesired());
             postByParent.setLocationDesired(postParentDTO.getLocationDesired());
+            postByParent.setTimes(postParentDTO.getTimes());
+            postByParent.setClassRequirement(postParentDTO.getClassRequirement());
+            postByParent.setPeriod(postParentDTO.getPeriod());
+            postByParent.setClassLevel(postParentDTO.getClassLevel());
+            postByParent.setSubject(postParentDTO.getSubject());
+
+
+            postParentRepository.save(postByParent);
+
         }
 
         return postParentDTO;
@@ -84,15 +87,16 @@ public class ParentService {
         List<PostByParentDTO> postByParentDTOs = new ArrayList<PostByParentDTO>();
         for (PostByParent postByParent : postByParentList) {
             PostByParentDTO postByParentDTO = new PostByParentDTO();
-            postByParentDTO.setPostContent(postByParent.getPostContent());
-            postByParentDTO.setTime(postByParent.getTime());
-            postByParentDTO.setStatus(postByParent.getStatus());
-            postByParentDTO.setGender(postByParent.getGender());
-            postByParentDTO.setLevel(postByParent.getLevel());
-            postByParentDTO.setSubject(postByParent.getSubject());
             postByParentDTO.setContact(postByParent.getContact());
             postByParentDTO.setSalaryDesired(postByParent.getSalaryDesired());
             postByParentDTO.setLocationDesired(postByParent.getLocationDesired());
+            postByParentDTO.setTimes(postByParent.getTimes());
+            postByParentDTO.setClassRequirement(postByParent.getClassRequirement());
+            postByParentDTO.setPeriod(postByParent.getPeriod());
+            postByParentDTO.setClassLevel(postByParent.getClassLevel());
+            postByParentDTO.setSubject(postByParent.getSubject());
+
+
             postByParentDTOs.add(postByParentDTO);
         }
         return postByParentDTOs;
@@ -104,16 +108,16 @@ public class ParentService {
             List<PostByParentDTO> postByParentDTOs = new ArrayList<PostByParentDTO>();
             for (PostByParent postByParent : arrPost) {
                 PostByParentDTO postByParentDTO = new PostByParentDTO();
-                postByParentDTO.setPostContent(postByParent.getPostContent());
-                postByParentDTO.setTime(postByParent.getTime());
-                postByParentDTO.setStatus(postByParent.getStatus());
-                postByParentDTO.setGender(postByParent.getGender());
-                postByParentDTO.setLevel(postByParent.getLevel());
-                postByParentDTO.setSubject(postByParent.getSubject());
                 postByParentDTO.setContact(postByParent.getContact());
                 postByParentDTO.setSalaryDesired(postByParent.getSalaryDesired());
                 postByParentDTO.setLocationDesired(postByParent.getLocationDesired());
-                postByParentDTOs.add(postByParentDTO);
+                postByParentDTO.setTimes(postByParent.getTimes());
+                postByParentDTO.setClassRequirement(postByParent.getClassRequirement());
+                postByParentDTO.setPeriod(postByParent.getPeriod());
+                postByParentDTO.setSubject(postByParent.getSubject());
+
+
+                postByParentDTO.setClassLevel(postByParent.getClassLevel());
             }
             return postByParentDTOs;
         } else throw new NullPointerException("Parent khong ton tai");

@@ -6,36 +6,54 @@ package helix.com.tutorapp.dto;
 public class PostByTutorDTO {
     private Long id;
     private String subject;
-    private String time;
+    private String times;
     private String timePost;
+    private String salaryDesired;
+    private String locationDesired;
+    private String classRequirement;
+    private String classLevel;
+    private String period;
 
-    private String salary;
-    private String area;
-    private String about;
 
-
-    public String getSalary() {
-        return salary;
+    public String getPeriod() {
+        return period;
     }
 
-    public void setSalary(String salary) {
-        this.salary = salary;
+    public void setPeriod(String period) {
+        this.period = period;
     }
 
-    public String getArea() {
-        return area;
+
+    public String getSalaryDesired() {
+        return salaryDesired;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setSalaryDesired(String salaryDesired) {
+        this.salaryDesired = salaryDesired;
     }
 
-    public String getAbout() {
-        return about;
+    public String getClassLevel() {
+        return classLevel;
     }
 
-    public void setAbout(String about) {
-        this.about = about;
+    public void setClassLevel(String classLevel) {
+        this.classLevel = classLevel;
+    }
+
+    public String getLocationDesired() {
+        return locationDesired;
+    }
+
+    public void setLocationDesired(String locationDesired) {
+        this.locationDesired = locationDesired;
+    }
+
+    public String getClassRequirement() {
+        return classRequirement;
+    }
+
+    public void setClassRequirement(String classRequirement) {
+        this.classRequirement = classRequirement;
     }
 
     public Long getId() {
@@ -54,12 +72,12 @@ public class PostByTutorDTO {
         this.subject = subject;
     }
 
-    public String getTime() {
-        return time;
+    public String getTimes() {
+        return times;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTimes(String times) {
+        this.times = times;
     }
 
     public String getTimePost() {

@@ -1,8 +1,6 @@
 package helix.com.tutorapp.service.impl;
 
 import helix.com.tutorapp.dto.PostByTutorDTO;
-import helix.com.tutorapp.dto.PostByTutorDTO;
-import helix.com.tutorapp.dto.PostByTutorDTO;
 import helix.com.tutorapp.dto.TutorDTO;
 import helix.com.tutorapp.model.entity.*;
 import helix.com.tutorapp.model.entity.PostByTutor;
@@ -24,7 +22,6 @@ public class TutorService {
     private TutorRepository tutorRepository;
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private PostTutorRepository postTutorRepository;
 
@@ -42,14 +39,13 @@ public class TutorService {
         Tutor tutor = tutorRepository.findById(id);
         TutorDTO tutorDTO1 = new TutorDTO();
         if (user.getTutor() == tutor) {
-            tutor.setFristName(tutorDTO.getFristName());
-            tutor.setLastName(tutorDTO.getLastName());
+            tutor.setName(tutorDTO.getName());
             tutor.setGender(tutorDTO.getGender());
             tutor.setBirth(tutorDTO.getBirth());
             tutor.setCurrentJob(tutorDTO.getCurrentJob());
             tutor.setLocation(tutorDTO.getLocation());
             tutor = tutorRepository.save(tutor);
-            tutorDTO1.setLastName(tutor.getLastName());
+
             return tutorDTO;
         } else {
             throw new NullPointerException("Tutor khong ton tai");
@@ -61,11 +57,12 @@ public class TutorService {
         PostByTutor postByTutor = new PostByTutor();
         postByTutor.setTutor(user.getTutor());
         postByTutor.setTimePost(tutorDTO.getTimePost());
-        postByTutor.setArea(tutorDTO.getArea());
-        postByTutor.setSalary(tutorDTO.getSalary());
-        postByTutor.setAbout(tutorDTO.getAbout());
+        postByTutor.setArea(tutorDTO.getLocationDesired());
+        postByTutor.setSalary(tutorDTO.getSalaryDesired());
+        postByTutor.setAbout(tutorDTO.getClassRequirement());
         postByTutor.setTimePost(tutorDTO.getTimePost());
-        postByTutor.setTime(tutorDTO.getTime());
+        postByTutor.setTime(tutorDTO.getTimes());
+        postByTutor.setLevelClass(tutorDTO.getClassLevel());
         postByTutor.setSubject(tutorDTO.getSubject());
 
 
@@ -80,11 +77,12 @@ public class TutorService {
         PostByTutor postByTutor = postTutorRepository.findById(id);
         if (postByTutor.getTutor() == user.getTutor()) {
             postByTutor.setTimePost(tutorDTO.getTimePost());
-            postByTutor.setArea(tutorDTO.getArea());
-            postByTutor.setSalary(tutorDTO.getSalary());
-            postByTutor.setAbout(tutorDTO.getAbout());
+            postByTutor.setArea(tutorDTO.getLocationDesired());
+            postByTutor.setSalary(tutorDTO.getSalaryDesired());
+            postByTutor.setAbout(tutorDTO.getClassRequirement());
             postByTutor.setTimePost(tutorDTO.getTimePost());
-            postByTutor.setTime(tutorDTO.getTime());
+            postByTutor.setTime(tutorDTO.getTimes());
+            postByTutor.setLevelClass(tutorDTO.getClassLevel());
             postByTutor.setSubject(tutorDTO.getSubject());
         }
 
@@ -110,12 +108,14 @@ public class TutorService {
         List<PostByTutorDTO> postByTutorDTOs = new ArrayList<PostByTutorDTO>();
         for (PostByTutor postByTutor : postByTutorList) {
             PostByTutorDTO postByTutorDTO = new PostByTutorDTO();
-            postByTutorDTO.setTime(postByTutor.getTime());
-            postByTutorDTO.setArea(postByTutor.getArea());
-            postByTutorDTO.setSalary(postByTutor.getSalary());
-            postByTutorDTO.setAbout(postByTutor.getAbout());
+            postByTutorDTO.setTimes(postByTutor.getTime());
+            postByTutorDTO.setLocationDesired(postByTutor.getArea());
+            postByTutorDTO.setSalaryDesired(postByTutor.getSalary());
+            postByTutorDTO.setClassRequirement(postByTutor.getAbout());
             postByTutorDTO.setTimePost(postByTutor.getTimePost());
             postByTutorDTO.setSubject(postByTutor.getSubject());
+            postByTutorDTO.setClassLevel(postByTutor.getLevelClass());
+
             postByTutorDTOs.add(postByTutorDTO);
         }
         return postByTutorDTOs;
@@ -128,12 +128,15 @@ public class TutorService {
             List<PostByTutorDTO> postByTutorDTOs = new ArrayList<PostByTutorDTO>();
             for (PostByTutor postByTutor : arrPost) {
                 PostByTutorDTO postByTutorDTO = new PostByTutorDTO();
-                postByTutorDTO.setTime(postByTutor.getTime());
+                postByTutorDTO.setTimes(postByTutor.getTime());
                 postByTutorDTO.setTimePost(postByTutor.getTimePost());
-                postByTutorDTO.setArea(postByTutor.getArea());
-                postByTutorDTO.setSalary(postByTutor.getSalary());
-                postByTutorDTO.setAbout(postByTutor.getAbout());
+                postByTutorDTO.setLocationDesired(postByTutor.getArea());
+                postByTutorDTO.setSalaryDesired(postByTutor.getSalary());
+                postByTutorDTO.setClassRequirement(postByTutor.getAbout());
                 postByTutorDTO.setSubject(postByTutor.getSubject());
+                postByTutorDTO.setClassLevel(postByTutor.getLevelClass());
+
+
                 postByTutorDTOs.add(postByTutorDTO);
             }
             return postByTutorDTOs;

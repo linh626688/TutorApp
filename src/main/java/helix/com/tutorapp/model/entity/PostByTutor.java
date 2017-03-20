@@ -20,6 +20,8 @@ public class PostByTutor {
     private String salary;
     private String area;
     private String about;
+    private String levelClass;
+
 
     public Long getId() {
         return id;
@@ -53,6 +55,13 @@ public class PostByTutor {
         this.about = about;
     }
 
+    public String getLevelClass() {
+        return levelClass;
+    }
+
+    public void setLevelClass(String levelClass) {
+        this.levelClass = levelClass;
+    }
     public Tutor getTutor() {
         return tutor;
     }

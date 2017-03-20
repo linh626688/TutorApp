@@ -25,7 +25,7 @@ import java.util.UUID;
  */
 @Service
 public class UserService {
-    private static String UPLOADED_FOLDER = "D://temp//";
+    private static String UPLOADED_FOLDER = "C://temp//";
 
     @Autowired
     private UserRepository userRepository;
