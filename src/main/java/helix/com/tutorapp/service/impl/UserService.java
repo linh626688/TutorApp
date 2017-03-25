@@ -25,7 +25,7 @@ import java.util.UUID;
  */
 @Service
 public class UserService {
-    private static String UPLOADED_FOLDER = "C://temp//";
+    private static String UPLOADED_FOLDER = "C://xampp//htdocs//spring//upload//";
 
     @Autowired
     private UserRepository userRepository;
@@ -123,10 +123,22 @@ public class UserService {
             Path path = Paths.get(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
             Files.write(path, bytes);
             System.out.println(path);
-            user.setAvatar(path.toString());
-            System.out.println(user.getAvatar());
             userRepository.save(user);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
+    }
+    public String setTestAvatar( MultipartFile multipartFile) {
+        if (multipartFile.isEmpty()) {
+            return "Null";
+        }
+        try {
+            byte[] bytes = multipartFile.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
+            Files.write(path, bytes);
+            System.out.println(path);
         } catch (IOException e) {
             e.printStackTrace();
         }

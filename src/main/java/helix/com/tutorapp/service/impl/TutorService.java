@@ -8,8 +8,19 @@ import helix.com.tutorapp.model.repository.PostTutorRepository;
 import helix.com.tutorapp.model.repository.TutorRepository;
 import helix.com.tutorapp.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +35,9 @@ public class TutorService {
     private UserRepository userRepository;
     @Autowired
     private PostTutorRepository postTutorRepository;
+
+    private static String UPLOADED_FOLDER = "C://xampp//htdocs//spring//upload//";
+
 
     public User findUserToken(String token) {
         return userRepository.findByToken(token);
@@ -40,7 +54,6 @@ public class TutorService {
         TutorDTO tutorDTO1 = new TutorDTO();
         if (user.getTutor() == tutor) {
             tutor.setName(tutorDTO.getName());
-            tutor.setGender(tutorDTO.getGender());
             tutor.setBirth(tutorDTO.getBirth());
             tutor.setCurrentJob(tutorDTO.getCurrentJob());
             tutor.setLocation(tutorDTO.getLocation());
@@ -65,7 +78,6 @@ public class TutorService {
         postByTutor.setLevelClass(tutorDTO.getClassLevel());
         postByTutor.setSubject(tutorDTO.getSubject());
 
-
         postByTutor = postTutorRepository.save(postByTutor);
 
         return tutorDTO;
@@ -84,6 +96,7 @@ public class TutorService {
             postByTutor.setTime(tutorDTO.getTimes());
             postByTutor.setLevelClass(tutorDTO.getClassLevel());
             postByTutor.setSubject(tutorDTO.getSubject());
+
         }
 
         return tutorDTO;
@@ -115,6 +128,8 @@ public class TutorService {
             postByTutorDTO.setTimePost(postByTutor.getTimePost());
             postByTutorDTO.setSubject(postByTutor.getSubject());
             postByTutorDTO.setClassLevel(postByTutor.getLevelClass());
+            postByTutorDTO.setImagePost(postByTutor.getImagePost());
+
 
             postByTutorDTOs.add(postByTutorDTO);
         }
@@ -135,6 +150,7 @@ public class TutorService {
                 postByTutorDTO.setClassRequirement(postByTutor.getAbout());
                 postByTutorDTO.setSubject(postByTutor.getSubject());
                 postByTutorDTO.setClassLevel(postByTutor.getLevelClass());
+                postByTutorDTO.setImagePost(postByTutor.getImagePost());
 
 
                 postByTutorDTOs.add(postByTutorDTO);
@@ -142,4 +158,56 @@ public class TutorService {
             return postByTutorDTOs;
         } else throw new NullPointerException("Tutor khong ton tai");
     }
+
+    public String setImagePost(String token, Long id, MultipartFile multipartFile) {
+        User user = userRepository.findByToken(token);
+        Tutor tutor = tutorRepository.findById(user.getTutor().getId());
+        PostByTutor postByTutor = postTutorRepository.findByIdAndTutorId(id, tutor.getId());
+
+        if (multipartFile.isEmpty()) {
+            return "Null";
+        }
+        try {
+            byte[] bytes = multipartFile.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
+            Files.write(path, bytes);
+            System.out.println(path);
+            postByTutor.setImagePost(path.toString());
+            postTutorRepository.save(postByTutor);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
+
+    }
+
+    public String setImagePostNoToken(Long id, MultipartFile multipartFile) {
+        PostByTutor postByTutor = postTutorRepository.findById(id);
+
+        if (multipartFile.isEmpty()) {
+            return "Null";
+        }
+        try {
+            byte[] bytes = multipartFile.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
+            Files.write(path, bytes);
+            System.out.println(path);
+            postByTutor.setImagePost(path.toString());
+            postTutorRepository.save(postByTutor);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
+
+    }
+
+    public PostByTutor getImage2(Long id) {
+        PostByTutor postByTutor = postTutorRepository.findById(id);
+        return postByTutor;
+
+    }
+
 }
+

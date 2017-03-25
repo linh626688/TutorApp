@@ -3,6 +3,7 @@ package helix.com.tutorapp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 
@@ -16,6 +17,13 @@ public class TutorApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TutorApplication.class, args);
+    }
+    @Bean
+    MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        factory.setMaxFileSize("5120MB");
+        factory.setMaxRequestSize("5120MB");
+        return factory.createMultipartConfig();
     }
     @Bean
     public FilterRegistrationBean corsFilter() {

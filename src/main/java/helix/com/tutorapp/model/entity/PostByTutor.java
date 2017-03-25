@@ -21,6 +21,7 @@ public class PostByTutor {
     private String area;
     private String about;
     private String levelClass;
+    private String imagePost;
 
 
     public Long getId() {
@@ -37,6 +38,14 @@ public class PostByTutor {
 
     public void setSalary(String salary) {
         this.salary = salary;
+    }
+
+    public String getImagePost() {
+        return imagePost;
+    }
+
+    public void setImagePost(String imagePost) {
+        this.imagePost = imagePost;
     }
 
     public String getArea() {

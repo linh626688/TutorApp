@@ -45,7 +45,6 @@ public class UploadService {
             Tutor tutor = new Tutor();
             TutorDTO tutorDTO1 = new TutorDTO();
             tutor.setName(tutorDTOs.get(i).getName());
-            tutor.setGender(tutorDTOs.get(i).getGender());
             tutor.setBirth(tutorDTOs.get(i).getBirth());
             tutor.setCurrentJob(tutorDTOs.get(i).getCurrentJob());
             tutor.setLocation(tutorDTOs.get(i).getLocation());
@@ -61,6 +60,7 @@ public class UploadService {
             postByTutor.setTime("Thoa Thuan");
             postByTutor.setSubject(tutorDTOs.get(i).getSubject());
             postByTutor.setLevelClass(tutorDTOs.get(i).getLevelClass());
+            postByTutor.setImagePost(tutorDTOs.get(i).getImagePost());
 
             postByTutor = postTutorRepository.save(postByTutor);
 

@@ -2,14 +2,19 @@ package helix.com.tutorapp.controller;
 
 import helix.com.tutorapp.dto.RoleDTO;
 import helix.com.tutorapp.dto.UserDTO;
+import helix.com.tutorapp.model.entity.PostByTutor;
+import helix.com.tutorapp.model.entity.Tutor;
 import helix.com.tutorapp.model.entity.User;
 import helix.com.tutorapp.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -57,6 +62,11 @@ public class UserController {
         String token = request.getHeader("auth-token");
         return userService.setAvatar(token, multipartFile);
     }
+    @RequestMapping(value = "/test/upload", headers = "content-type=multipart/form-data", method = RequestMethod.POST)
+    public String singleTestFileUpload(@RequestParam("file") MultipartFile multipartFile) {
+        return userService.setTestAvatar( multipartFile);
+    }
+
 
 
 }

@@ -12,17 +12,7 @@ public class PostByTutorDTO {
     private String locationDesired;
     private String classRequirement;
     private String classLevel;
-    private String period;
-
-
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
+    private String imagePost;
 
     public String getSalaryDesired() {
         return salaryDesired;
@@ -38,6 +28,14 @@ public class PostByTutorDTO {
 
     public void setClassLevel(String classLevel) {
         this.classLevel = classLevel;
+    }
+
+    public String getImagePost() {
+        return imagePost;
+    }
+
+    public void setImagePost(String imagePost) {
+        this.imagePost = imagePost;
     }
 
     public String getLocationDesired() {

@@ -16,15 +16,9 @@ public class Tutor {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    private String gender;
     private String currentJob;
     private String birth;
-
-
     private String name;
-
-
     private String location;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -72,14 +66,6 @@ public class Tutor {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public List<PostByTutor> getPostByTutor() {

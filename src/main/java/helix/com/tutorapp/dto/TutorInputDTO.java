@@ -10,7 +10,6 @@ public class TutorInputDTO {
     private String currentJob;
     private String birth;
     private String location;
-    private String gender;
     private String subject;
     private String time;
     private String timePost;
@@ -18,6 +17,7 @@ public class TutorInputDTO {
     private String area;
     private String about;
     private String levelClass;
+    private String imagePost;
 
     public Long getId() {
         return id;
@@ -25,6 +25,14 @@ public class TutorInputDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getImagePost() {
+        return imagePost;
+    }
+
+    public void setImagePost(String imagePost) {
+        this.imagePost = imagePost;
     }
 
     public String getName() {
@@ -57,14 +65,6 @@ public class TutorInputDTO {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public String getSubject() {

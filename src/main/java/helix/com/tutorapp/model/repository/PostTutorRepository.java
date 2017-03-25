@@ -12,5 +12,7 @@ import java.util.List;
 public interface PostTutorRepository extends CrudRepository<PostByTutor, Long> {
     PostByTutor findById(Long postId);
 
+    PostByTutor findByIdAndTutorId(Long postId, Long tutorId);
+
     List<PostByTutor> findByTutorId(Long tutorId);
 }
