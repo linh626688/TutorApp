@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -130,7 +131,8 @@ public class UserService {
         }
         return "done";
     }
-    public String setTestAvatar( MultipartFile multipartFile) {
+
+    public String setTestAvatar(MultipartFile multipartFile) {
         if (multipartFile.isEmpty()) {
             return "Null";
         }
@@ -138,7 +140,10 @@ public class UserService {
             byte[] bytes = multipartFile.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
             Files.write(path, bytes);
-            System.out.println(path);
+            System.out.println(path.getFileName());
+            String linkImage = "http://35.185.156.51/spring/upload/"+path.getFileName();
+            System.out.println(linkImage);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

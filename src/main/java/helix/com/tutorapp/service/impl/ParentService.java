@@ -73,7 +73,6 @@ public class ParentService {
             postByParent.setClassLevel(postParentDTO.getClassLevel());
             postByParent.setSubject(postParentDTO.getSubject());
 
-
             postParentRepository.save(postByParent);
 
         }
@@ -95,6 +94,7 @@ public class ParentService {
             postByParentDTO.setPeriod(postByParent.getPeriod());
             postByParentDTO.setClassLevel(postByParent.getClassLevel());
             postByParentDTO.setSubject(postByParent.getSubject());
+            postByParentDTO.setId(postByParent.getId());
 
 
             postByParentDTOs.add(postByParentDTO);
@@ -115,8 +115,7 @@ public class ParentService {
                 postByParentDTO.setClassRequirement(postByParent.getClassRequirement());
                 postByParentDTO.setPeriod(postByParent.getPeriod());
                 postByParentDTO.setSubject(postByParent.getSubject());
-
-
+                postByParentDTO.setId(postByParent.getId());
                 postByParentDTO.setClassLevel(postByParent.getClassLevel());
             }
             return postByParentDTOs;
@@ -137,5 +136,21 @@ public class ParentService {
             }
         } else return "No Post this id";
 
+    }
+
+    public PostByParentDTO getPostParent(Long id) {
+        PostByParent postByParent = postParentRepository.findById(id);
+        PostByParentDTO postByParentDTO = new PostByParentDTO();
+        postByParentDTO.setContact(postByParent.getContact());
+        postByParentDTO.setSalaryDesired(postByParent.getSalaryDesired());
+        postByParentDTO.setLocationDesired(postByParent.getLocationDesired());
+        postByParentDTO.setTimes(postByParent.getTimes());
+        postByParentDTO.setClassRequirement(postByParent.getClassRequirement());
+        postByParentDTO.setPeriod(postByParent.getPeriod());
+        postByParentDTO.setSubject(postByParent.getSubject());
+        postByParentDTO.setId(postByParent.getId());
+        postByParentDTO.setClassLevel(postByParent.getClassLevel());
+
+        return postByParentDTO;
     }
 }

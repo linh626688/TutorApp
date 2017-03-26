@@ -8,15 +8,9 @@ import helix.com.tutorapp.model.repository.PostTutorRepository;
 import helix.com.tutorapp.model.repository.TutorRepository;
 import helix.com.tutorapp.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -72,7 +66,7 @@ public class TutorService {
         postByTutor.setTimePost(tutorDTO.getTimePost());
         postByTutor.setArea(tutorDTO.getLocationDesired());
         postByTutor.setSalary(tutorDTO.getSalaryDesired());
-        postByTutor.setAbout(tutorDTO.getClassRequirement());
+        postByTutor.setAbout(tutorDTO.getAbout());
         postByTutor.setTimePost(tutorDTO.getTimePost());
         postByTutor.setTime(tutorDTO.getTimes());
         postByTutor.setLevelClass(tutorDTO.getClassLevel());
@@ -91,7 +85,7 @@ public class TutorService {
             postByTutor.setTimePost(tutorDTO.getTimePost());
             postByTutor.setArea(tutorDTO.getLocationDesired());
             postByTutor.setSalary(tutorDTO.getSalaryDesired());
-            postByTutor.setAbout(tutorDTO.getClassRequirement());
+            postByTutor.setAbout(tutorDTO.getAbout());
             postByTutor.setTimePost(tutorDTO.getTimePost());
             postByTutor.setTime(tutorDTO.getTimes());
             postByTutor.setLevelClass(tutorDTO.getClassLevel());
@@ -124,12 +118,13 @@ public class TutorService {
             postByTutorDTO.setTimes(postByTutor.getTime());
             postByTutorDTO.setLocationDesired(postByTutor.getArea());
             postByTutorDTO.setSalaryDesired(postByTutor.getSalary());
-            postByTutorDTO.setClassRequirement(postByTutor.getAbout());
+            postByTutorDTO.setAbout(postByTutor.getAbout());
             postByTutorDTO.setTimePost(postByTutor.getTimePost());
             postByTutorDTO.setSubject(postByTutor.getSubject());
             postByTutorDTO.setClassLevel(postByTutor.getLevelClass());
             postByTutorDTO.setImagePost(postByTutor.getImagePost());
-
+            postByTutorDTO.setId(postByTutor.getId());
+            postByTutorDTO.setImagePost(postByTutor.getImagePost());
 
             postByTutorDTOs.add(postByTutorDTO);
         }
@@ -147,9 +142,11 @@ public class TutorService {
                 postByTutorDTO.setTimePost(postByTutor.getTimePost());
                 postByTutorDTO.setLocationDesired(postByTutor.getArea());
                 postByTutorDTO.setSalaryDesired(postByTutor.getSalary());
-                postByTutorDTO.setClassRequirement(postByTutor.getAbout());
+                postByTutorDTO.setAbout(postByTutor.getAbout());
                 postByTutorDTO.setSubject(postByTutor.getSubject());
                 postByTutorDTO.setClassLevel(postByTutor.getLevelClass());
+                postByTutorDTO.setImagePost(postByTutor.getImagePost());
+                postByTutorDTO.setId(postByTutor.getId());
                 postByTutorDTO.setImagePost(postByTutor.getImagePost());
 
 
@@ -171,8 +168,8 @@ public class TutorService {
             byte[] bytes = multipartFile.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
             Files.write(path, bytes);
-            System.out.println(path);
-            postByTutor.setImagePost(path.toString());
+            String linkImage = "http://35.185.156.51/spring/upload/" + path.getFileName();
+            postByTutor.setImagePost(linkImage);
             postTutorRepository.save(postByTutor);
 
         } catch (IOException e) {
@@ -193,7 +190,7 @@ public class TutorService {
             Path path = Paths.get(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
             Files.write(path, bytes);
             System.out.println(path);
-            postByTutor.setImagePost(path.toString());
+            String linkImage = "http://35.185.156.51/spring/upload/" + path.getFileName();
             postTutorRepository.save(postByTutor);
 
         } catch (IOException e) {
@@ -206,8 +203,23 @@ public class TutorService {
     public PostByTutor getImage2(Long id) {
         PostByTutor postByTutor = postTutorRepository.findById(id);
         return postByTutor;
-
     }
 
+    public PostByTutorDTO getPostTutor(Long id) {
+        PostByTutor postByTutor = postTutorRepository.findById(id);
+        PostByTutorDTO postByTutorDTO = new PostByTutorDTO();
+        postByTutorDTO.setTimes(postByTutor.getTime());
+        postByTutorDTO.setTimePost(postByTutor.getTimePost());
+        postByTutorDTO.setLocationDesired(postByTutor.getArea());
+        postByTutorDTO.setSalaryDesired(postByTutor.getSalary());
+        postByTutorDTO.setAbout(postByTutor.getAbout());
+        postByTutorDTO.setSubject(postByTutor.getSubject());
+        postByTutorDTO.setClassLevel(postByTutor.getLevelClass());
+        postByTutorDTO.setImagePost(postByTutor.getImagePost());
+        postByTutorDTO.setId(postByTutor.getId());
+        postByTutorDTO.setImagePost(postByTutor.getImagePost());
+        return postByTutorDTO;
+
+    }
 }
 

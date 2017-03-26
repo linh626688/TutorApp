@@ -10,7 +10,7 @@ public class PostByTutorDTO {
     private String timePost;
     private String salaryDesired;
     private String locationDesired;
-    private String classRequirement;
+    private String about;
     private String classLevel;
     private String imagePost;
 
@@ -46,12 +46,12 @@ public class PostByTutorDTO {
         this.locationDesired = locationDesired;
     }
 
-    public String getClassRequirement() {
-        return classRequirement;
+    public String getAbout() {
+        return about;
     }
 
-    public void setClassRequirement(String classRequirement) {
-        this.classRequirement = classRequirement;
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     public Long getId() {

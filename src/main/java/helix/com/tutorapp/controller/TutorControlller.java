@@ -78,11 +78,16 @@ public class TutorControlller {
     @RequestMapping(value = "/postByTutor/{id}/update-image-post-notoken", headers = "content-type=multipart/form-data", method = RequestMethod.POST)
     public String singleFileUploadNoToken(@RequestParam("file") MultipartFile multipartFile, @PathVariable("id") Long id) {
         return tutorService.setImagePostNoToken(id, multipartFile);
-    }
+}
 
     @RequestMapping(value = "/get-image/{post_id}", method = RequestMethod.GET)
     public PostByTutor getImage(@PathVariable("post_id") Long id) {
         return tutorService.getImage2(id);
+    }
+
+    @RequestMapping(value = "/postTutor/{id}",method = RequestMethod.GET)
+    public PostByTutorDTO getPostTutor(@PathVariable("id") Long id){
+        return tutorService.getPostTutor(id);
     }
 
 }

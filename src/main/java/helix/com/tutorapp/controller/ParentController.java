@@ -53,7 +53,10 @@ public class ParentController {
         return parentService.allPostParent();
     }
 
-
+    @RequestMapping(value = "/postParent/{id}",method = RequestMethod.GET)
+    public PostByParentDTO getPostParent(@PathVariable("id") Long id){
+        return parentService.getPostParent(id);
+    }
     //list all Post by Parent
     @RequestMapping(value = "/allPostByParent/{id_parent}",method = RequestMethod.GET)
     public List<PostByParentDTO> allPostByParent(@PathVariable("id_parent") Long idParent){
