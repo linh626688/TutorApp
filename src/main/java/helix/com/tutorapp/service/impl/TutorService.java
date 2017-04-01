@@ -1,12 +1,12 @@
 package helix.com.tutorapp.service.impl;
 
+import helix.com.tutorapp.api.googlemapresponse.GoogleMapResult;
+import helix.com.tutorapp.dto.LocationDTO;
 import helix.com.tutorapp.dto.PostByTutorDTO;
 import helix.com.tutorapp.dto.TutorDTO;
 import helix.com.tutorapp.model.entity.*;
 import helix.com.tutorapp.model.entity.PostByTutor;
-import helix.com.tutorapp.model.repository.PostTutorRepository;
-import helix.com.tutorapp.model.repository.TutorRepository;
-import helix.com.tutorapp.model.repository.UserRepository;
+import helix.com.tutorapp.model.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,10 +26,13 @@ public class TutorService {
     @Autowired
     private TutorRepository tutorRepository;
     @Autowired
+    private PostParentRepository postParentRepository;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     private PostTutorRepository postTutorRepository;
-
+    @Autowired
+    private UserService userService;
     private static String UPLOADED_FOLDER = "C://xampp//htdocs//spring//upload//";
 
 
@@ -242,5 +245,38 @@ public class TutorService {
         return postByTutorDTO;
 
     }
+
+    public List<PostByTutor> addLocation() {
+        List<PostByTutor> tutors = (List<PostByTutor>) postTutorRepository.findAll();
+        for (int i = 0; i < tutors.size(); i++) {
+            LocationDTO locationDTO = new LocationDTO();
+            locationDTO.setLocation(tutors.get(i).getArea());
+            GoogleMapResult result = userService.getLatLng(locationDTO);
+            float lat = result.getResult()[0].getGeometry().getLocation().getLat();
+            float lng = result.getResult()[0].getGeometry().getLocation().getLng();
+            tutors.get(i).setLat(lat);
+            tutors.get(i).setLng(lng);
+
+            postTutorRepository.save(tutors.get(i));
+        }
+        return tutors;
+    }
+
+    public List<PostByParent> findParentwithDistance(LocationDTO locationDTO, float distance) {
+        List<PostByParent> postByParents = (List<PostByParent>) postParentRepository.findAll();
+        List<PostByParent> result = new ArrayList<PostByParent>();
+        for (int i = 0; i < postByParents.size(); i++) {
+            LocationDTO locationDTO2 = new LocationDTO();
+            locationDTO2.setLat(postByParents.get(i).getLat());
+            locationDTO2.setLng(postByParents.get(i).getLng());
+
+            if (userService.getDistance(locationDTO, locationDTO2) <= distance) {
+                result.add(postByParents.get(i));
+            }
+        }
+        return result;
+    }
+
+
 }
 

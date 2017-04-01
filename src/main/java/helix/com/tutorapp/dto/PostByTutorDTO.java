@@ -16,6 +16,24 @@ public class PostByTutorDTO {
     private String classLevel;
     private String imagePost;
     private Tutor tutor;
+    private float lat;
+    private float lng;
+
+    public float getLat() {
+        return lat;
+    }
+
+    public void setLat(float lat) {
+        this.lat = lat;
+    }
+
+    public float getLng() {
+        return lng;
+    }
+
+    public void setLng(float lng) {
+        this.lng = lng;
+    }
 
     public Tutor getTutor() {
         return tutor;

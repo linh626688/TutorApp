@@ -1,7 +1,9 @@
 package helix.com.tutorapp.controller;
 
+import helix.com.tutorapp.dto.LocationDTO;
 import helix.com.tutorapp.dto.PostByTutorDTO;
 import helix.com.tutorapp.dto.TutorDTO;
+import helix.com.tutorapp.model.entity.PostByParent;
 import helix.com.tutorapp.model.entity.PostByTutor;
 import helix.com.tutorapp.service.impl.TutorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,16 +82,32 @@ public class TutorControlller {
     @RequestMapping(value = "/postByTutor/{id}/update-image-post-notoken", headers = "content-type=multipart/form-data", method = RequestMethod.POST)
     public String singleFileUploadNoToken(@RequestParam("file") MultipartFile multipartFile, @PathVariable("id") Long id) {
         return tutorService.setImagePostNoToken(id, multipartFile);
-}
+    }
 
     @RequestMapping(value = "/get-image/{post_id}", method = RequestMethod.GET)
     public PostByTutor getImage(@PathVariable("post_id") Long id) {
         return tutorService.getImage2(id);
     }
 
-    @RequestMapping(value = "/postTutor/{id}",method = RequestMethod.GET)
-    public PostByTutorDTO getPostTutor(@PathVariable("id") Long id){
+    @RequestMapping(value = "/postTutor/{id}", method = RequestMethod.GET)
+    public PostByTutorDTO getPostTutor(@PathVariable("id") Long id) {
         return tutorService.getPostTutor(id);
     }
 
+    @RequestMapping(value = "/tutor/addLocation", method = RequestMethod.POST)
+    public List<PostByTutor> addLocation() {
+        return tutorService.addLocation();
+    }
+
+    @RequestMapping(value = "tutor/findParent", method = RequestMethod.POST)
+    public List<PostByParent> findParentwithDistance(@RequestBody LocationDTO locationDTO,@RequestParam("distance") float distance ) {
+        return tutorService.findParentwithDistance(locationDTO,distance);
+    }
+
+//    @RequestMapping(value = "tutor/calculate", method = RequestMethod.POST)
+//    public float getDistance(@RequestBody List<LocationDTO> locationDTO) {
+//        return tutorService.getDistance(locationDTO);
+//    }
+
 }
+
