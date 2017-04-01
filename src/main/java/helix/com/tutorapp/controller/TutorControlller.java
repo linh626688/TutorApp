@@ -69,10 +69,12 @@ public class TutorControlller {
         return tutorService.allPostByTutor(idTutor);
     }
 
-    @RequestMapping(value = "/postByTutor/{id}/update-image-post", headers = "content-type=multipart/form-data", method = RequestMethod.POST)
-    public String singleFileUpload(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request, @PathVariable("id") Long id) {
+    @RequestMapping(value = "/postByTutor/update-image-post", headers = "content-type=multipart/form-data", method = RequestMethod.POST)
+    public String singleFileUpload(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request) {
         String token = request.getHeader("auth-token");
-        return tutorService.setImagePost(token, id, multipartFile);
+        String postId = (request.getHeader("postId"));
+
+        return tutorService.setImagePost(token, postId, multipartFile);
     }
 
     @RequestMapping(value = "/postByTutor/{id}/update-image-post-notoken", headers = "content-type=multipart/form-data", method = RequestMethod.POST)

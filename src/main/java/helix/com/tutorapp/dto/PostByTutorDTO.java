@@ -1,5 +1,7 @@
 package helix.com.tutorapp.dto;
 
+import helix.com.tutorapp.model.entity.Tutor;
+
 /**
  * Created by DangThanhLinh on 06/12/2016.
  */
@@ -13,6 +15,15 @@ public class PostByTutorDTO {
     private String about;
     private String classLevel;
     private String imagePost;
+    private Tutor tutor;
+
+    public Tutor getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
+    }
 
     public String getSalaryDesired() {
         return salaryDesired;

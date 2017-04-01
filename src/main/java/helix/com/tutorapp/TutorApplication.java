@@ -43,7 +43,7 @@ public class TutorApplication {
                         "Access-Control-Allow-Headers",
                         "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method," +
                                 "Access-Control-Request-Headers,Authorization," +
-                                "auth-token,ra_preferred_ip," +
+                                "auth-token,ra_preferred_ip,postId" +
                                 "Pragma,Cache-Control,Expires,PageToken");
                 if ("OPTIONS".equals(method)) {
                     response.setStatus(HttpStatus.OK.value());

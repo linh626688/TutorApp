@@ -61,6 +61,7 @@ public class TutorService {
 
     public PostByTutorDTO createPostTutor(String token, PostByTutorDTO tutorDTO) {
         User user = userRepository.findByToken(token);
+        Tutor tutor = tutorRepository.findById(user.getTutor().getId());
         PostByTutor postByTutor = new PostByTutor();
         postByTutor.setTutor(user.getTutor());
         postByTutor.setTimePost(tutorDTO.getTimePost());
@@ -71,9 +72,10 @@ public class TutorService {
         postByTutor.setTime(tutorDTO.getTimes());
         postByTutor.setLevelClass(tutorDTO.getClassLevel());
         postByTutor.setSubject(tutorDTO.getSubject());
-
+        postByTutor.setTutor(tutorDTO.getTutor());
         postByTutor = postTutorRepository.save(postByTutor);
 
+        tutorDTO.setId(postByTutor.getId());
         return tutorDTO;
     }
 
@@ -90,7 +92,6 @@ public class TutorService {
             postByTutor.setTime(tutorDTO.getTimes());
             postByTutor.setLevelClass(tutorDTO.getClassLevel());
             postByTutor.setSubject(tutorDTO.getSubject());
-
         }
 
         return tutorDTO;
@@ -125,7 +126,7 @@ public class TutorService {
             postByTutorDTO.setImagePost(postByTutor.getImagePost());
             postByTutorDTO.setId(postByTutor.getId());
             postByTutorDTO.setImagePost(postByTutor.getImagePost());
-
+            postByTutorDTO.setTutor(postByTutor.getTutor());
             postByTutorDTOs.add(postByTutorDTO);
         }
         return postByTutorDTOs;
@@ -156,10 +157,11 @@ public class TutorService {
         } else throw new NullPointerException("Tutor khong ton tai");
     }
 
-    public String setImagePost(String token, Long id, MultipartFile multipartFile) {
+    public String setImagePost(String token, String id, MultipartFile multipartFile) {
         User user = userRepository.findByToken(token);
         Tutor tutor = tutorRepository.findById(user.getTutor().getId());
-        PostByTutor postByTutor = postTutorRepository.findByIdAndTutorId(id, tutor.getId());
+
+        PostByTutor postByTutor = postTutorRepository.findByIdAndTutorId(Long.valueOf(id), tutor.getId());
 
         if (multipartFile.isEmpty()) {
             return "Null";
@@ -176,6 +178,25 @@ public class TutorService {
             e.printStackTrace();
         }
         return "done";
+
+    }
+
+    public String addImage(MultipartFile multipartFile) {
+        String linkImage = null;
+        if (multipartFile.isEmpty()) {
+            return "Null";
+        }
+        try {
+            byte[] bytes = multipartFile.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
+            Files.write(path, bytes);
+            System.out.println(path);
+            linkImage = "http://35.185.156.51/spring/upload/" + path.getFileName();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return linkImage;
 
     }
 

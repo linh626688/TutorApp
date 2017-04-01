@@ -55,6 +55,7 @@ public class ParentService {
         postByParent.setSubject(postParentDTO.getSubject());
 
         postByParent = postParentRepository.save(postByParent);
+        postParentDTO.setId(postByParent.getId());
 
         return postParentDTO;
     }
@@ -95,6 +96,7 @@ public class ParentService {
             postByParentDTO.setClassLevel(postByParent.getClassLevel());
             postByParentDTO.setSubject(postByParent.getSubject());
             postByParentDTO.setId(postByParent.getId());
+            postByParentDTO.setTimePost(postByParent.getTimePost());
 
 
             postByParentDTOs.add(postByParentDTO);
@@ -117,6 +119,7 @@ public class ParentService {
                 postByParentDTO.setSubject(postByParent.getSubject());
                 postByParentDTO.setId(postByParent.getId());
                 postByParentDTO.setClassLevel(postByParent.getClassLevel());
+                postByParentDTO.setTimePost(postByParent.getTimePost());
             }
             return postByParentDTOs;
         } else throw new NullPointerException("Parent khong ton tai");
