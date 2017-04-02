@@ -252,8 +252,8 @@ public class TutorService {
             LocationDTO locationDTO = new LocationDTO();
             locationDTO.setLocation(tutors.get(i).getArea());
             GoogleMapResult result = userService.getLatLng(locationDTO);
-            float lat = result.getResult()[0].getGeometry().getLocation().getLat();
-            float lng = result.getResult()[0].getGeometry().getLocation().getLng();
+            float lat = result.getResults()[0].getGeometry().getLocation().getLat();
+            float lng = result.getResults()[0].getGeometry().getLocation().getLng();
             tutors.get(i).setLat(lat);
             tutors.get(i).setLng(lng);
 
@@ -271,6 +271,29 @@ public class TutorService {
             locationDTO2.setLng(postByParents.get(i).getLng());
 
             if (userService.getDistance(locationDTO, locationDTO2) <= distance) {
+                result.add(postByParents.get(i));
+            }
+        }
+        return result;
+    }
+
+    public List<PostByParent> findParentwithDistanceNoLatLong(LocationDTO locationDTO, float distance) {
+        List<PostByParent> postByParents = (List<PostByParent>) postParentRepository.findAll();
+        List<PostByParent> result = new ArrayList<PostByParent>();
+        GoogleMapResult latLng = userService.getLatLng(locationDTO);
+        System.out.println(latLng);
+        System.out.println(latLng.getResults().length);
+        System.out.println(latLng.getResults()[0]);
+
+        LocationDTO locationDTO1 = new LocationDTO();
+        locationDTO1.setLat(latLng.getResults()[0].getGeometry().getLocation().getLat());
+        locationDTO1.setLng(latLng.getResults()[0].getGeometry().getLocation().getLng());
+        LocationDTO locationDTO2 = new LocationDTO();
+        for (int i = 0; i < postByParents.size(); i++) {
+            locationDTO2.setLat(postByParents.get(i).getLat());
+            locationDTO2.setLng(postByParents.get(i).getLng());
+
+            if (userService.getDistance(locationDTO1, locationDTO2) <= distance) {
                 result.add(postByParents.get(i));
             }
         }

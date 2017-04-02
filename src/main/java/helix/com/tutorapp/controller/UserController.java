@@ -1,5 +1,7 @@
 package helix.com.tutorapp.controller;
 
+import helix.com.tutorapp.api.googlemapresponse.GoogleMapResult;
+import helix.com.tutorapp.dto.LocationDTO;
 import helix.com.tutorapp.dto.RoleDTO;
 import helix.com.tutorapp.dto.UserDTO;
 import helix.com.tutorapp.model.entity.PostByTutor;
@@ -68,5 +70,9 @@ public class UserController {
     }
 
 
+    @RequestMapping(value = "/test/result",method = RequestMethod.POST)
+    public GoogleMapResult googleMapResult(@RequestBody LocationDTO locationDTO){
+        return userService.getLatLng(locationDTO);
+    }
 
 }

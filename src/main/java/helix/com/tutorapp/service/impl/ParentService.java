@@ -190,8 +190,8 @@ public class ParentService {
             LocationDTO locationDTO = new LocationDTO();
             locationDTO.setLocation(parents.get(i).getLocationDesired());
             GoogleMapResult result = userService.getLatLng(locationDTO);
-            float lat = result.getResult()[0].getGeometry().getLocation().getLat();
-            float lng = result.getResult()[0].getGeometry().getLocation().getLng();
+            float lat = result.getResults()[0].getGeometry().getLocation().getLat();
+            float lng = result.getResults()[0].getGeometry().getLocation().getLng();
             parents.get(i).setLat(lat);
             parents.get(i).setLng(lng);
 

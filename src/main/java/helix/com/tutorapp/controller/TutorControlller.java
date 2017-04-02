@@ -103,6 +103,10 @@ public class TutorControlller {
     public List<PostByParent> findParentwithDistance(@RequestBody LocationDTO locationDTO,@RequestParam("distance") float distance ) {
         return tutorService.findParentwithDistance(locationDTO,distance);
     }
+    @RequestMapping(value = "tutor/findParentNoLatLong", method = RequestMethod.POST)
+    public List<PostByParent> findParentwithDistanceNoLatLong(@RequestBody LocationDTO locationDTO,@RequestParam("distance") float distance ) {
+        return tutorService.findParentwithDistanceNoLatLong(locationDTO,distance);
+    }
 
 //    @RequestMapping(value = "tutor/calculate", method = RequestMethod.POST)
 //    public float getDistance(@RequestBody List<LocationDTO> locationDTO) {

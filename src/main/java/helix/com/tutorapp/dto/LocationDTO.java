@@ -5,8 +5,8 @@ package helix.com.tutorapp.dto;
  */
 public class LocationDTO {
     private String location;
-    private double lat;
-    private double lng;
+    private float lat;
+    private float lng;
 
     public String getLocation() {
         return location;
@@ -20,7 +20,7 @@ public class LocationDTO {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(float lat) {
         this.lat = lat;
     }
 
@@ -28,7 +28,7 @@ public class LocationDTO {
         return lng;
     }
 
-    public void setLng(double lng) {
+    public void setLng(float lng) {
         this.lng = lng;
     }
 }
