@@ -15,7 +15,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,12 +66,20 @@ public class TutorService {
         }
     }
 
+
+    public List<Tutor> getAllTutor() {
+        List<Tutor> tutors = tutorRepository.findAll();
+        return tutors;
+    }
+
     public PostByTutorDTO createPostTutor(String token, PostByTutorDTO tutorDTO) {
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
+        Date date = new Date();
         User user = userRepository.findByToken(token);
         Tutor tutor = tutorRepository.findById(user.getTutor().getId());
         PostByTutor postByTutor = new PostByTutor();
         postByTutor.setTutor(user.getTutor());
-        postByTutor.setTimePost(tutorDTO.getTimePost());
+        postByTutor.setTimePost(dateFormat.format(date));
         postByTutor.setArea(tutorDTO.getLocationDesired());
         postByTutor.setSalary(tutorDTO.getSalaryDesired());
         postByTutor.setAbout(tutorDTO.getAbout());
@@ -75,7 +87,12 @@ public class TutorService {
         postByTutor.setTime(tutorDTO.getTimes());
         postByTutor.setLevelClass(tutorDTO.getClassLevel());
         postByTutor.setSubject(tutorDTO.getSubject());
-        postByTutor.setTutor(tutorDTO.getTutor());
+        postByTutor.setTutor(tutor);
+        LocationDTO locationDTO = new LocationDTO();
+        locationDTO.setLocation(tutorDTO.getLocationDesired());
+        GoogleMapResult googleMapResult = userService.getLatLng(locationDTO);
+        postByTutor.setLat(googleMapResult.getResults()[0].getGeometry().getLocation().getLat());
+        postByTutor.setLng(googleMapResult.getResults()[0].getGeometry().getLocation().getLng());
         postByTutor = postTutorRepository.save(postByTutor);
 
         tutorDTO.setId(postByTutor.getId());
@@ -84,18 +101,31 @@ public class TutorService {
 
 
     public PostByTutorDTO editPostTutor(String token, Long id, PostByTutorDTO tutorDTO) {
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
+        Date date = new Date();
         User user = userRepository.findByToken(token);
+        Tutor tutor = tutorRepository.findById(user.getTutor().getId());
         PostByTutor postByTutor = postTutorRepository.findById(id);
-        if (postByTutor.getTutor() == user.getTutor()) {
-            postByTutor.setTimePost(tutorDTO.getTimePost());
-            postByTutor.setArea(tutorDTO.getLocationDesired());
-            postByTutor.setSalary(tutorDTO.getSalaryDesired());
-            postByTutor.setAbout(tutorDTO.getAbout());
-            postByTutor.setTimePost(tutorDTO.getTimePost());
-            postByTutor.setTime(tutorDTO.getTimes());
-            postByTutor.setLevelClass(tutorDTO.getClassLevel());
-            postByTutor.setSubject(tutorDTO.getSubject());
-        }
+//        if (postByTutor.getTutor() == user.getTutor()) {
+
+        postByTutor.setTimePost(tutorDTO.getTimePost());
+        postByTutor.setArea(tutorDTO.getLocationDesired());
+        postByTutor.setSalary(tutorDTO.getSalaryDesired());
+        postByTutor.setAbout(tutorDTO.getAbout());
+        postByTutor.setTimePost(tutorDTO.getTimePost());
+        postByTutor.setTime(tutorDTO.getTimes());
+        postByTutor.setTutor(tutor);
+        postByTutor.setLevelClass(tutorDTO.getClassLevel());
+        postByTutor.setSubject(tutorDTO.getSubject());
+        LocationDTO locationDTO = new LocationDTO();
+        locationDTO.setLocation(tutorDTO.getLocationDesired());
+        GoogleMapResult googleMapResult = userService.getLatLng(locationDTO);
+        postByTutor.setLat(googleMapResult.getResults()[0].getGeometry().getLocation().getLat());
+        postByTutor.setLng(googleMapResult.getResults()[0].getGeometry().getLocation().getLng());
+        postByTutor = postTutorRepository.save(postByTutor);
+        tutorDTO.setId(postByTutor.getId());
+
+//        }
 
         return tutorDTO;
     }
@@ -103,15 +133,22 @@ public class TutorService {
     public String deletePostTutor(String token, Long id) {
         User user = userRepository.findByToken(token);
 
-        if (postTutorRepository.findById(id) != null) {
+//        if (postTutorRepository.findById(id) != null) {
+//            PostByTutor postByTutor = postTutorRepository.findById(id);
+//            if (postByTutor.getTutor().equals(user.getTutor())) {
+//                postTutorRepository.delete(postByTutor);
+//                return "Delete Success";
+//            } else {
+//                return "Not Permission";
+//            }
+//        } else return "No Post this id";
+        if (userRepository.findByToken(token) != null) {
             PostByTutor postByTutor = postTutorRepository.findById(id);
-            if (postByTutor.getTutor().equals(user.getTutor())) {
-                postTutorRepository.delete(postByTutor);
-                return "Delete Success";
-            } else {
-                return "Not Permission";
-            }
-        } else return "No Post this id";
+            postTutorRepository.delete(postByTutor);
+            return "Delete Success";
+        } else return "Not Permission";
+
+
     }
 
     public List<PostByTutorDTO> allPostTutor() {
@@ -151,6 +188,8 @@ public class TutorService {
                 postByTutorDTO.setClassLevel(postByTutor.getLevelClass());
                 postByTutorDTO.setImagePost(postByTutor.getImagePost());
                 postByTutorDTO.setId(postByTutor.getId());
+                postByTutorDTO.setLat(postByTutor.getLat());
+                postByTutorDTO.setLng(postByTutor.getLng());
                 postByTutorDTO.setImagePost(postByTutor.getImagePost());
 
 
@@ -242,6 +281,9 @@ public class TutorService {
         postByTutorDTO.setImagePost(postByTutor.getImagePost());
         postByTutorDTO.setId(postByTutor.getId());
         postByTutorDTO.setImagePost(postByTutor.getImagePost());
+        postByTutorDTO.setTutor(postByTutor.getTutor());
+        postByTutorDTO.setLat(postByTutor.getLat());
+        postByTutorDTO.setLng(postByTutor.getLng());
         return postByTutorDTO;
 
     }
@@ -281,13 +323,13 @@ public class TutorService {
         List<PostByParent> postByParents = (List<PostByParent>) postParentRepository.findAll();
         List<PostByParent> result = new ArrayList<PostByParent>();
         GoogleMapResult latLng = userService.getLatLng(locationDTO);
-        System.out.println(latLng);
         System.out.println(latLng.getResults().length);
-        System.out.println(latLng.getResults()[0]);
+        System.out.println(latLng.getResults()[0].formatted_address);
 
         LocationDTO locationDTO1 = new LocationDTO();
         locationDTO1.setLat(latLng.getResults()[0].getGeometry().getLocation().getLat());
         locationDTO1.setLng(latLng.getResults()[0].getGeometry().getLocation().getLng());
+        locationDTO1.setLocation(latLng.getResults()[0].formatted_address);
         LocationDTO locationDTO2 = new LocationDTO();
         for (int i = 0; i < postByParents.size(); i++) {
             locationDTO2.setLat(postByParents.get(i).getLat());
@@ -301,5 +343,9 @@ public class TutorService {
     }
 
 
+    public Tutor getTutor(Long id) {
+        Tutor tutor = tutorRepository.findById(id);
+        return tutor;
+    }
 }
 

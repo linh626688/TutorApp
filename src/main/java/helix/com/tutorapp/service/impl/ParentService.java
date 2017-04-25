@@ -2,6 +2,7 @@ package helix.com.tutorapp.service.impl;
 
 import helix.com.tutorapp.api.FacebookUser;
 import helix.com.tutorapp.api.googlemapresponse.GoogleMapResult;
+import helix.com.tutorapp.api.googlemapresponse.Location;
 import helix.com.tutorapp.constant.FacebookAPIConstant;
 import helix.com.tutorapp.constant.GoogleMapApi;
 import helix.com.tutorapp.dto.LocationDTO;
@@ -19,10 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by helix on 11/1/2016.
@@ -64,7 +64,9 @@ public class ParentService {
         User user = userRepository.findByToken(token);
         PostByParent postByParent = new PostByParent();
         postByParent.setParent(user.getParent());
-        postByParent.setTimePost(postParentDTO.getTimePost());
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
+        Date date = new Date();
+        postByParent.setTimePost(dateFormat.format(date));
         postByParent.setContact(postParentDTO.getContact());
         postByParent.setSalaryDesired(postParentDTO.getSalaryDesired());
         postByParent.setLocationDesired(postParentDTO.getLocationDesired());
@@ -73,6 +75,12 @@ public class ParentService {
         postByParent.setPeriod(postParentDTO.getPeriod());
         postByParent.setClassLevel(postParentDTO.getClassLevel());
         postByParent.setSubject(postParentDTO.getSubject());
+
+        LocationDTO locationDTO = new LocationDTO();
+        locationDTO.setLocation(postParentDTO.getLocationDesired());
+        GoogleMapResult googleMapResult = userService.getLatLng(locationDTO);
+        postByParent.setLat(googleMapResult.getResults()[0].getGeometry().getLocation().getLat());
+        postByParent.setLng(googleMapResult.getResults()[0].getGeometry().getLocation().getLng());
 
         postByParent = postParentRepository.save(postByParent);
         postParentDTO.setId(postByParent.getId());
@@ -84,7 +92,9 @@ public class ParentService {
         User user = userRepository.findByToken(token);
         PostByParent postByParent = postParentRepository.findById(id);
         if (postByParent.getParent() == user.getParent()) {
-            postByParent.setTimePost(postParentDTO.getTimePost());
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
+            Date date = new Date();
+            postByParent.setTimePost(dateFormat.format(date));
             postByParent.setContact(postParentDTO.getContact());
             postByParent.setSalaryDesired(postParentDTO.getSalaryDesired());
             postByParent.setLocationDesired(postParentDTO.getLocationDesired());
@@ -93,6 +103,12 @@ public class ParentService {
             postByParent.setPeriod(postParentDTO.getPeriod());
             postByParent.setClassLevel(postParentDTO.getClassLevel());
             postByParent.setSubject(postParentDTO.getSubject());
+            LocationDTO locationDTO = new LocationDTO();
+            locationDTO.setLocation(postParentDTO.getLocationDesired());
+            GoogleMapResult googleMapResult = userService.getLatLng(locationDTO);
+            postByParent.setLat(googleMapResult.getResults()[0].getGeometry().getLocation().getLat());
+            postByParent.setLng(googleMapResult.getResults()[0].getGeometry().getLocation().getLng());
+            postParentDTO.setId(postByParent.getId());
 
             postParentRepository.save(postByParent);
 
@@ -149,16 +165,22 @@ public class ParentService {
     public String deletePostParent(String token, Long id) {
         User user = userRepository.findByToken(token);
 
-        if (postParentRepository.findById(id) != null) {
+//        if (postParentRepository.findById(id) != null) {
+//            PostByParent postByParent = postParentRepository.findById(id);
+//            if (postByParent.getParent().equals(user.getParent())) {
+//                postParentRepository.delete(postByParent);
+//                return "Delete Success";
+//            } else {
+//                return "Not Permission";
+//            }
+//        } else return "No Post this id";
+        if (userRepository.findByToken(token) != null) {
             PostByParent postByParent = postParentRepository.findById(id);
-            if (postByParent.getParent().equals(user.getParent())) {
-                postParentRepository.delete(postByParent);
-                return "Delete Success";
-            } else {
-                return "Not Permission";
-            }
-        } else return "No Post this id";
-
+            postParentRepository.delete(postByParent);
+            return "Delete Success";
+        } else{
+            return "Not Permission";
+        }
     }
 
     public PostByParentDTO getPostParent(Long id) {
@@ -213,5 +235,35 @@ public class ParentService {
             }
         }
         return result;
+    }
+
+    public List<PostByTutor> findTutotrwithDistanceNoLatLong(LocationDTO locationDTO, float distance) {
+        List<PostByTutor> postByTutors = (List<PostByTutor>) postTutorRepository.findAll();
+        List<PostByTutor> result = new ArrayList<PostByTutor>();
+        GoogleMapResult latLng = userService.getLatLng(locationDTO);
+
+        System.out.println(latLng);
+        System.out.println(latLng.getResults().length);
+        System.out.println(latLng.getResults()[0]);
+
+        LocationDTO locationDTO1 = new LocationDTO();
+        locationDTO1.setLat(latLng.getResults()[0].getGeometry().getLocation().getLat());
+        locationDTO1.setLng(latLng.getResults()[0].getGeometry().getLocation().getLng());
+        LocationDTO locationDTO2 = new LocationDTO();
+        for (int i = 0; i < postByTutors.size(); i++) {
+            locationDTO2.setLat(postByTutors.get(i).getLat());
+            locationDTO2.setLng(postByTutors.get(i).getLng());
+
+            if (userService.getDistance(locationDTO1, locationDTO2) <= distance) {
+                result.add(postByTutors.get(i));
+            }
+        }
+        return result;
+    }
+
+    public List<Parent> getAllParent() {
+
+        List<Parent> parents = (List<Parent>) parentRepository.findAll();
+        return parents;
     }
 }

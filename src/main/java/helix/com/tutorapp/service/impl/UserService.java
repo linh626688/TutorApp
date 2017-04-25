@@ -111,6 +111,11 @@ public class UserService {
             result.setUsername(user.getUsername());
             result.setRole(user.getRole());
             result.setToken(user.getToken());
+            result.setTutor(user.getTutor());
+            System.out.println(user.getTutor());
+            System.out.println(user.getParent());
+            result.setParent(user.getParent());
+
             return result;
         } else {
             throw new NullPointerException("sai username hoac password");
@@ -150,7 +155,7 @@ public class UserService {
             Path path = Paths.get(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
             Files.write(path, bytes);
             System.out.println(path.getFileName());
-            String linkImage = "http://35.185.156.51/spring/upload/"+path.getFileName();
+            String linkImage = "http://35.185.156.51/spring/upload/" + path.getFileName();
             System.out.println(linkImage);
 
         } catch (IOException e) {
@@ -158,6 +163,7 @@ public class UserService {
         }
         return "done";
     }
+
     public GoogleMapResult getLatLng(LocationDTO location) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("location", location.getLocation());
@@ -168,6 +174,7 @@ public class UserService {
                 params
         );
     }
+
     public float radian(float x) {
         return (float) (x * Math.PI / 180);
     }

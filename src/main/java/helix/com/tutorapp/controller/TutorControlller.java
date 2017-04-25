@@ -5,6 +5,7 @@ import helix.com.tutorapp.dto.PostByTutorDTO;
 import helix.com.tutorapp.dto.TutorDTO;
 import helix.com.tutorapp.model.entity.PostByParent;
 import helix.com.tutorapp.model.entity.PostByTutor;
+import helix.com.tutorapp.model.entity.Tutor;
 import helix.com.tutorapp.service.impl.TutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -100,12 +101,22 @@ public class TutorControlller {
     }
 
     @RequestMapping(value = "tutor/findParent", method = RequestMethod.POST)
-    public List<PostByParent> findParentwithDistance(@RequestBody LocationDTO locationDTO,@RequestParam("distance") float distance ) {
-        return tutorService.findParentwithDistance(locationDTO,distance);
+    public List<PostByParent> findParentwithDistance(@RequestBody LocationDTO locationDTO, @RequestParam("distance") float distance) {
+        return tutorService.findParentwithDistance(locationDTO, distance);
     }
+
     @RequestMapping(value = "tutor/findParentNoLatLong", method = RequestMethod.POST)
-    public List<PostByParent> findParentwithDistanceNoLatLong(@RequestBody LocationDTO locationDTO,@RequestParam("distance") float distance ) {
-        return tutorService.findParentwithDistanceNoLatLong(locationDTO,distance);
+    public List<PostByParent> findParentwithDistanceNoLatLong(@RequestBody LocationDTO locationDTO, @RequestParam("distance") float distance) {
+        return tutorService.findParentwithDistanceNoLatLong(locationDTO, distance);
+    }
+
+    @RequestMapping(value = "/getAllTutor", method = RequestMethod.GET)
+    public List<Tutor> getAllTutor(){
+        return tutorService.getAllTutor();
+    }
+    @RequestMapping(value = "/getTutor/{id}", method = RequestMethod.GET)
+    public Tutor getAllTutor(@PathVariable("id") Long id){
+        return tutorService.getTutor(id);
     }
 
 //    @RequestMapping(value = "tutor/calculate", method = RequestMethod.POST)

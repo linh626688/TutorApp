@@ -1,6 +1,8 @@
 package helix.com.tutorapp.dto;
 
+import helix.com.tutorapp.model.entity.Parent;
 import helix.com.tutorapp.model.entity.Role;
+import helix.com.tutorapp.model.entity.Tutor;
 
 /**
  * Created by helix on 10/18/2016.
@@ -11,6 +13,25 @@ public class UserDTO {
     private Long id;
     private Role role;
     private String token;
+    private Tutor tutor;
+    private Parent parent;
+
+
+    public Tutor getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
+    }
+
+    public Parent getParent() {
+        return parent;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
+    }
 
     public String getUsername() {
         return username;
