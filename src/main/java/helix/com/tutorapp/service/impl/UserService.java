@@ -111,9 +111,8 @@ public class UserService {
             result.setUsername(user.getUsername());
             result.setRole(user.getRole());
             result.setToken(user.getToken());
+            result.setId(user.getId());
             result.setTutor(user.getTutor());
-            System.out.println(user.getTutor());
-            System.out.println(user.getParent());
             result.setParent(user.getParent());
 
             return result;

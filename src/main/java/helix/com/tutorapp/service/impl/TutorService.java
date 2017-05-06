@@ -167,6 +167,8 @@ public class TutorService {
             postByTutorDTO.setId(postByTutor.getId());
             postByTutorDTO.setImagePost(postByTutor.getImagePost());
             postByTutorDTO.setTutor(postByTutor.getTutor());
+            postByTutorDTO.setLat(postByTutor.getLat());
+            postByTutorDTO.setLng(postByTutor.getLng());
             postByTutorDTOs.add(postByTutorDTO);
         }
         return postByTutorDTOs;
@@ -212,7 +214,7 @@ public class TutorService {
             byte[] bytes = multipartFile.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
             Files.write(path, bytes);
-            String linkImage = "http://35.185.156.51/spring/upload/" + path.getFileName();
+            String linkImage = "http://35.187.156.70/spring/upload/" + path.getFileName();
             postByTutor.setImagePost(linkImage);
             postTutorRepository.save(postByTutor);
 
@@ -233,7 +235,7 @@ public class TutorService {
             Path path = Paths.get(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
             Files.write(path, bytes);
             System.out.println(path);
-            linkImage = "http://35.185.156.51/spring/upload/" + path.getFileName();
+            linkImage = "http://35.187.156.70/spring/upload/" + path.getFileName();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -253,7 +255,7 @@ public class TutorService {
             Path path = Paths.get(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
             Files.write(path, bytes);
             System.out.println(path);
-            String linkImage = "http://35.185.156.51/spring/upload/" + path.getFileName();
+            String linkImage = "http://35.187.156.70/spring/upload/" + path.getFileName();
             postTutorRepository.save(postByTutor);
 
         } catch (IOException e) {

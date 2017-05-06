@@ -133,7 +133,9 @@ public class ParentService {
             postByParentDTO.setSubject(postByParent.getSubject());
             postByParentDTO.setId(postByParent.getId());
             postByParentDTO.setTimePost(postByParent.getTimePost());
-
+            postByParentDTO.setLat(postByParent.getLat());
+            postByParentDTO.setLng(postByParent.getLng());
+            postByParentDTO.setId(postByParent.getId());
 
             postByParentDTOs.add(postByParentDTO);
         }
@@ -154,6 +156,8 @@ public class ParentService {
                 postByParentDTO.setPeriod(postByParent.getPeriod());
                 postByParentDTO.setSubject(postByParent.getSubject());
                 postByParentDTO.setId(postByParent.getId());
+                postByParentDTO.setLat(postByParent.getLat());
+                postByParentDTO.setLng(postByParent.getLng());
                 postByParentDTO.setClassLevel(postByParent.getClassLevel());
                 postByParentDTO.setTimePost(postByParent.getTimePost());
             }
@@ -194,6 +198,8 @@ public class ParentService {
         postByParentDTO.setPeriod(postByParent.getPeriod());
         postByParentDTO.setSubject(postByParent.getSubject());
         postByParentDTO.setId(postByParent.getId());
+        postByParentDTO.setLat(postByParent.getLat());
+        postByParentDTO.setLng(postByParent.getLng());
         postByParentDTO.setClassLevel(postByParent.getClassLevel());
 
         return postByParentDTO;
