@@ -3,12 +3,11 @@ package helix.com.tutorapp.service.impl;
 import helix.com.tutorapp.api.googlemapresponse.GoogleMapResult;
 import helix.com.tutorapp.constant.GoogleMapApi;
 import helix.com.tutorapp.dto.LocationDTO;
+import helix.com.tutorapp.dto.MesssageDTO;
 import helix.com.tutorapp.dto.RoleDTO;
 import helix.com.tutorapp.dto.UserDTO;
-import helix.com.tutorapp.model.entity.Parent;
-import helix.com.tutorapp.model.entity.Role;
-import helix.com.tutorapp.model.entity.Tutor;
-import helix.com.tutorapp.model.entity.User;
+import helix.com.tutorapp.model.entity.*;
+import helix.com.tutorapp.model.repository.MesssageRepository;
 import helix.com.tutorapp.model.repository.ParentRepository;
 import helix.com.tutorapp.model.repository.TutorRepository;
 import helix.com.tutorapp.model.repository.UserRepository;
@@ -42,6 +41,9 @@ public class UserService {
 
     @Autowired
     private ParentRepository parentRepository;
+
+    @Autowired
+    private MesssageRepository messsageRepository;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -188,5 +190,25 @@ public class UserService {
         float c = (float) (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
         float d = R * c;
         return d;
+    }
+
+    public MesssageDTO sentMessage(MesssageDTO messsageDTO, Long tutorId) {
+        Tutor tutor = tutorRepository.findById(tutorId);
+
+        Messsage messsage = new Messsage();
+        messsage.setState(messsageDTO.getState());
+        messsage.setContact(messsageDTO.getContact());
+        messsage.setEmail(messsageDTO.getEmail());
+        messsage.setDetailRequest(messsageDTO.getDetailRequest());
+        messsage.setTutor(tutor);
+        messsageRepository.save(messsage);
+
+        MesssageDTO dto = new MesssageDTO();
+        dto.setId(messsage.getId());
+        dto.setContact(messsage.getContact());
+        dto.setEmail(messsage.getEmail());
+        dto.setDetailRequest(messsage.getDetailRequest());
+        dto.setState(messsage.getState());
+        return dto;
     }
 }

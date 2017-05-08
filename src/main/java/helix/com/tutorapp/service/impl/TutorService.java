@@ -1,9 +1,7 @@
 package helix.com.tutorapp.service.impl;
 
 import helix.com.tutorapp.api.googlemapresponse.GoogleMapResult;
-import helix.com.tutorapp.dto.LocationDTO;
-import helix.com.tutorapp.dto.PostByTutorDTO;
-import helix.com.tutorapp.dto.TutorDTO;
+import helix.com.tutorapp.dto.*;
 import helix.com.tutorapp.model.entity.*;
 import helix.com.tutorapp.model.entity.PostByTutor;
 import helix.com.tutorapp.model.repository.*;
@@ -33,6 +31,8 @@ public class TutorService {
     private PostParentRepository postParentRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private MesssageRepository messsageRepository;
     @Autowired
     private PostTutorRepository postTutorRepository;
     @Autowired
@@ -348,6 +348,64 @@ public class TutorService {
     public Tutor getTutor(Long id) {
         Tutor tutor = tutorRepository.findById(id);
         return tutor;
+    }
+
+    public List<MesssageDTO> getAllMessages(String token) {
+        User user = userRepository.findByToken(token);
+        List<MesssageDTO> messsageDTOs = new ArrayList<MesssageDTO>();
+        if (user.getTutor() != null) {
+            List<Messsage> messsages = messsageRepository.findByTutorId(user.getTutor().getId());
+            for (int i = 0; i < messsages.size(); i++) {
+                MesssageDTO messsageDTO = new MesssageDTO();
+                messsageDTO.setId(messsages.get(i).getId());
+                messsageDTO.setContact(messsages.get(i).getContact());
+                messsageDTO.setEmail(messsages.get(i).getEmail());
+                messsageDTO.setDetailRequest(messsages.get(i).getDetailRequest());
+                messsageDTO.setState(messsages.get(i).getState());
+                messsageDTOs.add(messsageDTO);
+            }
+            return messsageDTOs;
+        } else
+            throw new NullPointerException("user khong hop le ");
+    }
+
+    public String removeMessage(Long id, String token) {
+        User user = userRepository.findByToken(token);
+        Messsage messsage = messsageRepository.findById(id);
+        if (user.getTutor().equals(messsage.getTutor())) {
+            messsageRepository.delete(messsage);
+            return "DELETE SUCCESS";
+        } else throw new NullPointerException("user khong hop le ");
+    }
+
+    public MesssageDTO getMessageDetail(Long id, String token) {
+        User user = userRepository.findByToken(token);
+        Messsage messsage = messsageRepository.findById(id);
+        if (user.getTutor().equals(messsage.getTutor())) {
+            MesssageDTO messsageDTO = new MesssageDTO();
+            messsageDTO.setId(messsage.getId());
+            messsageDTO.setContact(messsage.getContact());
+            messsageDTO.setEmail(messsage.getEmail());
+            messsageDTO.setDetailRequest(messsage.getDetailRequest());
+            messsageDTO.setState(messsage.getState());
+            return messsageDTO;
+        } else throw new NullPointerException("user khong hop le ");
+    }
+
+    public MesssageDTO setStateMessage(Long id, String token, StateDTO aBoolean) {
+        User user = userRepository.findByToken(token);
+        Messsage messsage = messsageRepository.findById(id);
+        if (user.getTutor().equals(messsage.getTutor())) {
+            messsage.setState(aBoolean.getaBoolean());
+            messsageRepository.save(messsage);
+            MesssageDTO messsageDTO = new MesssageDTO();
+            messsageDTO.setId(messsage.getId());
+            messsageDTO.setContact(messsage.getContact());
+            messsageDTO.setEmail(messsage.getEmail());
+            messsageDTO.setDetailRequest(messsage.getDetailRequest());
+            messsageDTO.setState(messsage.getState());
+            return messsageDTO;
+        } else throw new NullPointerException("user khong hop le ");
     }
 }
 

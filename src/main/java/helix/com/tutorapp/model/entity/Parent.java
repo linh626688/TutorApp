@@ -28,15 +28,16 @@ public class Parent {
         this.location = location;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(name = "parent_has_posts",
-            inverseJoinColumns = {
-                    @JoinColumn(name = "parent_id", referencedColumnName = "id")
-            },
-            joinColumns = {
-                    @JoinColumn(name = "postbyparent_id", referencedColumnName = "id")
-            }
-    )
+    //    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinTable(name = "parent_has_posts",
+//            inverseJoinColumns = {
+//                    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+//            },
+//            joinColumns = {
+//                    @JoinColumn(name = "postbyparent_id", referencedColumnName = "id")
+//            }
+//    )
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
     private List<PostByParent> postByParent = new ArrayList<PostByParent>();
 
 

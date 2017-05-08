@@ -11,9 +11,10 @@ public class PostByTutor {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "tutor_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tutor_id", nullable = false)
     private Tutor tutor;
+
     private String subject;
     private String time;
     private String timePost;

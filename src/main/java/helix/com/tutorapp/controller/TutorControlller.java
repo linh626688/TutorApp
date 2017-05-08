@@ -1,8 +1,7 @@
 package helix.com.tutorapp.controller;
 
-import helix.com.tutorapp.dto.LocationDTO;
-import helix.com.tutorapp.dto.PostByTutorDTO;
-import helix.com.tutorapp.dto.TutorDTO;
+import helix.com.tutorapp.dto.*;
+import helix.com.tutorapp.model.entity.Messsage;
 import helix.com.tutorapp.model.entity.PostByParent;
 import helix.com.tutorapp.model.entity.PostByTutor;
 import helix.com.tutorapp.model.entity.Tutor;
@@ -111,18 +110,47 @@ public class TutorControlller {
     }
 
     @RequestMapping(value = "/getAllTutor", method = RequestMethod.GET)
-    public List<Tutor> getAllTutor(){
+    public List<Tutor> getAllTutor() {
         return tutorService.getAllTutor();
     }
+
     @RequestMapping(value = "/getTutor/{id}", method = RequestMethod.GET)
-    public Tutor getAllTutor(@PathVariable("id") Long id){
+    public Tutor getAllTutor(@PathVariable("id") Long id) {
         return tutorService.getTutor(id);
     }
 
-//    @RequestMapping(value = "tutor/calculate", method = RequestMethod.POST)
+    //    @RequestMapping(value = "tutor/calculate", method = RequestMethod.POST)
 //    public float getDistance(@RequestBody List<LocationDTO> locationDTO) {
 //        return tutorService.getDistance(locationDTO);
 //    }
 
+    //get message of tutor
+    @RequestMapping(value = "/getAllMessages", method = RequestMethod.GET)
+    public List<MesssageDTO> getAllMesssages(HttpServletRequest request) {
+        String token = request.getHeader("auth-token");
+        return tutorService.getAllMessages( token);
+    }
+
+    //getMessageDetail
+    @RequestMapping(value = "/getMessagesDetail/{id}", method = RequestMethod.GET)
+    public MesssageDTO getMessageDetail(@PathVariable("id") Long id, HttpServletRequest request) {
+        String token = request.getHeader("auth-token");
+        return tutorService.getMessageDetail(id, token);
+    }
+
+    //removeMessage
+    @RequestMapping(value = "/removeMessage/{id}", method = RequestMethod.DELETE)
+    public String removeMessage(@PathVariable("id") Long id, HttpServletRequest request) {
+        String token = request.getHeader("auth-token");
+        return tutorService.removeMessage(id, token);
+    }
+
+    //
+    //setStateMessage
+    @RequestMapping(value = "/updateStateMessage/{id}", method = RequestMethod.PUT)
+    public MesssageDTO setStateMessage(@PathVariable("id") Long id, HttpServletRequest request, @RequestBody StateDTO stateDTO) {
+        String token = request.getHeader("auth-token");
+        return tutorService.setStateMessage(id, token,stateDTO);
+    }
 }
 

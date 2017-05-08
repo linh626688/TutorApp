@@ -1,7 +1,9 @@
 package helix.com.tutorapp.model.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by helix on 10/14/2016.
@@ -25,6 +27,7 @@ public class User {
 
     @OneToOne
     private Parent parent;
+
 
     public Tutor getTutor() {
         return tutor;

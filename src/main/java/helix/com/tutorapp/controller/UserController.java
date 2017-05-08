@@ -2,8 +2,10 @@ package helix.com.tutorapp.controller;
 
 import helix.com.tutorapp.api.googlemapresponse.GoogleMapResult;
 import helix.com.tutorapp.dto.LocationDTO;
+import helix.com.tutorapp.dto.MesssageDTO;
 import helix.com.tutorapp.dto.RoleDTO;
 import helix.com.tutorapp.dto.UserDTO;
+import helix.com.tutorapp.model.entity.Messsage;
 import helix.com.tutorapp.model.entity.PostByTutor;
 import helix.com.tutorapp.model.entity.Tutor;
 import helix.com.tutorapp.model.entity.User;
@@ -45,6 +47,7 @@ public class UserController {
         return userService.doLogin(user);
     }
 
+
     @RequestMapping(value = "/addRole", method = RequestMethod.POST)
     public void addRole(HttpServletRequest request, @RequestBody RoleDTO role) {
         String token = request.getHeader("auth-token");
@@ -64,15 +67,21 @@ public class UserController {
         String token = request.getHeader("auth-token");
         return userService.setAvatar(token, multipartFile);
     }
+
     @RequestMapping(value = "/test/upload", headers = "content-type=multipart/form-data", method = RequestMethod.POST)
     public String singleTestFileUpload(@RequestParam("file") MultipartFile multipartFile) {
-        return userService.setTestAvatar( multipartFile);
+        return userService.setTestAvatar(multipartFile);
     }
 
 
-    @RequestMapping(value = "/test/result",method = RequestMethod.POST)
-    public GoogleMapResult googleMapResult(@RequestBody LocationDTO locationDTO){
+    @RequestMapping(value = "/test/result", method = RequestMethod.POST)
+    public GoogleMapResult googleMapResult(@RequestBody LocationDTO locationDTO) {
         return userService.getLatLng(locationDTO);
     }
 
+    //sentMessage
+    @RequestMapping(value = "/sentMessage/{tutorId}", method = RequestMethod.POST)
+    public MesssageDTO sentMessage(@PathVariable("tutorId") Long id, @RequestBody MesssageDTO message) {
+        return userService.sentMessage(message, id);
+    }
 }

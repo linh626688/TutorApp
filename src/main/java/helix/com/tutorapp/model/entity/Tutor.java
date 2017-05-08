@@ -21,16 +21,28 @@ public class Tutor {
     private String name;
     private String location;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(name = "tutor_has_posts",
-            inverseJoinColumns = {
-                    @JoinColumn(name = "tutor_id", referencedColumnName = "id")
-            },
-            joinColumns = {
-                    @JoinColumn(name = "postbytutor_id", referencedColumnName = "id")
-            }
-    )
+    //    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinTable(name = "tutor_has_posts",
+//            inverseJoinColumns = {
+//                    @JoinColumn(name = "tutor_id", referencedColumnName = "id")
+//            },
+//            joinColumns = {
+//                    @JoinColumn(name = "postbytutor_id", referencedColumnName = "id")
+//            }
+//    )
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tutor")
     private List<PostByTutor> postByTutor = new ArrayList<PostByTutor>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tutor")
+    private List<Messsage> messsageList = new ArrayList<Messsage>();
+
+    public List<Messsage> getMesssageList() {
+        return messsageList;
+    }
+
+    public void setMesssageList(List<Messsage> messsageList) {
+        this.messsageList = messsageList;
+    }
 
     public String getCurrentJob() {
         return currentJob;
