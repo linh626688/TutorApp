@@ -20,6 +20,7 @@ public class Messsage {
     private String contact;
     private String email;
     private String detailRequest;
+    private String timeSend;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tutor_id", nullable = false)
@@ -27,6 +28,14 @@ public class Messsage {
 
     public Boolean getState() {
         return state;
+    }
+
+    public String getTimeSend() {
+        return timeSend;
+    }
+
+    public void setTimeSend(String timeSend) {
+        this.timeSend = timeSend;
     }
 
     public Long getId() {

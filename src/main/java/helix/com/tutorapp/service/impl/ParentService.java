@@ -1,13 +1,8 @@
 package helix.com.tutorapp.service.impl;
 
-import helix.com.tutorapp.api.FacebookUser;
 import helix.com.tutorapp.api.googlemapresponse.GoogleMapResult;
-import helix.com.tutorapp.api.googlemapresponse.Location;
-import helix.com.tutorapp.constant.FacebookAPIConstant;
 import helix.com.tutorapp.constant.GoogleMapApi;
-import helix.com.tutorapp.dto.LocationDTO;
-import helix.com.tutorapp.dto.ParentDTO;
-import helix.com.tutorapp.dto.PostByParentDTO;
+import helix.com.tutorapp.dto.*;
 import helix.com.tutorapp.model.entity.Parent;
 import helix.com.tutorapp.model.entity.PostByParent;
 import helix.com.tutorapp.model.entity.PostByTutor;
@@ -64,7 +59,7 @@ public class ParentService {
         User user = userRepository.findByToken(token);
         PostByParent postByParent = new PostByParent();
         postByParent.setParent(user.getParent());
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM");
         Date date = new Date();
         postByParent.setTimePost(dateFormat.format(date));
         postByParent.setContact(postParentDTO.getContact());
@@ -92,7 +87,7 @@ public class ParentService {
         User user = userRepository.findByToken(token);
         PostByParent postByParent = postParentRepository.findById(id);
         if (postByParent.getParent() == user.getParent()) {
-            DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM");
             Date date = new Date();
             postByParent.setTimePost(dateFormat.format(date));
             postByParent.setContact(postParentDTO.getContact());
@@ -228,7 +223,7 @@ public class ParentService {
         return parents;
     }
 
-    public List<PostByTutor> findParentwithDistance(LocationDTO locationDTO, float distance) {
+    public List<PostByTutorDTO> findParentwithDistance(LocationDTO locationDTO, float distance) {
         List<PostByTutor> postByTutors = (List<PostByTutor>) postTutorRepository.findAll();
         List<PostByTutor> result = new ArrayList<PostByTutor>();
         for (int i = 0; i < postByTutors.size(); i++) {
@@ -240,10 +235,36 @@ public class ParentService {
                 result.add(postByTutors.get(i));
             }
         }
-        return result;
+        List<PostByTutorDTO> postByTutorDTOs = new ArrayList<PostByTutorDTO>();
+        for(PostByTutor postByTutor: result) {
+            PostByTutorDTO postByTutorDTO = new PostByTutorDTO();
+            postByTutorDTO.setTimes(postByTutor.getTime());
+            postByTutorDTO.setTimePost(postByTutor.getTimePost());
+            postByTutorDTO.setLocationDesired(postByTutor.getArea());
+            postByTutorDTO.setSalaryDesired(postByTutor.getSalary());
+            postByTutorDTO.setAbout(postByTutor.getAbout());
+            postByTutorDTO.setSubject(postByTutor.getSubject());
+            postByTutorDTO.setClassLevel(postByTutor.getLevelClass());
+            postByTutorDTO.setImagePost(postByTutor.getImagePost());
+            postByTutorDTO.setId(postByTutor.getId());
+            postByTutorDTO.setImagePost(postByTutor.getImagePost());
+
+            TutorDTO tutorDTO = new TutorDTO();
+            tutorDTO.setId(postByTutor.getTutor().getId());
+            tutorDTO.setBirth(postByTutor.getTutor().getBirth());
+            tutorDTO.setCurrentJob(postByTutor.getTutor().getCurrentJob());
+            tutorDTO.setLocation(postByTutor.getTutor().getLocation());
+            tutorDTO.setName((postByTutor.getTutor().getName()));
+
+            postByTutorDTO.setTutor(tutorDTO);
+            postByTutorDTO.setLat(postByTutor.getLat());
+            postByTutorDTO.setLng(postByTutor.getLng());
+            postByTutorDTOs.add(postByTutorDTO);
+        }
+            return postByTutorDTOs;
     }
 
-    public List<PostByTutor> findTutotrwithDistanceNoLatLong(LocationDTO locationDTO, float distance) {
+    public List<PostByTutorDTO> findTutotrwithDistanceNoLatLong(LocationDTO locationDTO, float distance) {
         List<PostByTutor> postByTutors = (List<PostByTutor>) postTutorRepository.findAll();
         List<PostByTutor> result = new ArrayList<PostByTutor>();
         GoogleMapResult latLng = userService.getLatLng(locationDTO);
@@ -264,7 +285,31 @@ public class ParentService {
                 result.add(postByTutors.get(i));
             }
         }
-        return result;
+        List<PostByTutorDTO> postByTutorDTOs = new ArrayList<PostByTutorDTO>();
+        for(PostByTutor postByTutor: result) {
+            PostByTutorDTO postByTutorDTO = new PostByTutorDTO();
+            postByTutorDTO.setTimes(postByTutor.getTime());
+            postByTutorDTO.setTimePost(postByTutor.getTimePost());
+            postByTutorDTO.setLocationDesired(postByTutor.getArea());
+            postByTutorDTO.setSalaryDesired(postByTutor.getSalary());
+            postByTutorDTO.setAbout(postByTutor.getAbout());
+            postByTutorDTO.setSubject(postByTutor.getSubject());
+            postByTutorDTO.setClassLevel(postByTutor.getLevelClass());
+            postByTutorDTO.setImagePost(postByTutor.getImagePost());
+            postByTutorDTO.setId(postByTutor.getId());
+            postByTutorDTO.setImagePost(postByTutor.getImagePost());
+            TutorDTO tutorDTO = new TutorDTO();
+            tutorDTO.setId(postByTutor.getTutor().getId());
+            tutorDTO.setBirth(postByTutor.getTutor().getBirth());
+            tutorDTO.setCurrentJob(postByTutor.getTutor().getCurrentJob());
+            tutorDTO.setLocation(postByTutor.getTutor().getLocation());
+            tutorDTO.setName((postByTutor.getTutor().getName()));
+            postByTutorDTO.setTutor(tutorDTO);
+            postByTutorDTO.setLat(postByTutor.getLat());
+            postByTutorDTO.setLng(postByTutor.getLng());
+            postByTutorDTOs.add(postByTutorDTO);
+        }
+        return postByTutorDTOs;
     }
 
     public List<Parent> getAllParent() {

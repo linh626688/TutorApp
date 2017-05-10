@@ -2,15 +2,9 @@ package helix.com.tutorapp.service.impl;
 
 import helix.com.tutorapp.api.googlemapresponse.GoogleMapResult;
 import helix.com.tutorapp.constant.GoogleMapApi;
-import helix.com.tutorapp.dto.LocationDTO;
-import helix.com.tutorapp.dto.MesssageDTO;
-import helix.com.tutorapp.dto.RoleDTO;
-import helix.com.tutorapp.dto.UserDTO;
+import helix.com.tutorapp.dto.*;
 import helix.com.tutorapp.model.entity.*;
-import helix.com.tutorapp.model.repository.MesssageRepository;
-import helix.com.tutorapp.model.repository.ParentRepository;
-import helix.com.tutorapp.model.repository.TutorRepository;
-import helix.com.tutorapp.model.repository.UserRepository;
+import helix.com.tutorapp.model.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -21,6 +15,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +37,8 @@ public class UserService {
 
     @Autowired
     private ParentRepository parentRepository;
+    @Autowired
+    private PostTutorRepository postTutorRepository;
 
     @Autowired
     private MesssageRepository messsageRepository;
@@ -114,9 +112,23 @@ public class UserService {
             result.setRole(user.getRole());
             result.setToken(user.getToken());
             result.setId(user.getId());
-            result.setTutor(user.getTutor());
-            result.setParent(user.getParent());
+            if (user.getTutor() != null) {
+                TutorDTO tutorDTO = new TutorDTO();
+                tutorDTO.setId(user.getTutor().getId());
+                tutorDTO.setBirth(user.getTutor().getBirth());
+                tutorDTO.setCurrentJob(user.getTutor().getCurrentJob());
+                tutorDTO.setLocation(user.getTutor().getLocation());
+                tutorDTO.setName((user.getTutor().getName()));
 
+                result.setTutor(tutorDTO);
+            }
+            if (user.getParent() != null) {
+                ParentDTO parentDTO = new ParentDTO();
+                parentDTO.setId(user.getParent().getId());
+                parentDTO.setLocation(user.getParent().getLocation());
+
+                result.setParent(parentDTO);
+            }
             return result;
         } else {
             throw new NullPointerException("sai username hoac password");
@@ -192,23 +204,57 @@ public class UserService {
         return d;
     }
 
-    public MesssageDTO sentMessage(MesssageDTO messsageDTO, Long tutorId) {
-        Tutor tutor = tutorRepository.findById(tutorId);
+    public MesssageDTO sentMessage(MesssageDTO messsageDTO, Long postId) {
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM");
+        Date date = new Date();
+        PostByTutor postByTutor = postTutorRepository.findById(postId);
+        Long tutorId = postByTutor.getTutor().getId();
+        Tutor tutor = tutorRepository.findById(postByTutor.getTutor().getId());
 
-        Messsage messsage = new Messsage();
-        messsage.setState(messsageDTO.getState());
-        messsage.setContact(messsageDTO.getContact());
-        messsage.setEmail(messsageDTO.getEmail());
-        messsage.setDetailRequest(messsageDTO.getDetailRequest());
-        messsage.setTutor(tutor);
-        messsageRepository.save(messsage);
+//        TutorDTO tutorDTO = new TutorDTO();
+//        tutorDTO.setBirth(postByTutor.getTutor().getBirth());
+//        tutorDTO.setCurrentJob(postByTutor.getTutor().getBirth());
+//        tutorDTO.setLocation(postByTutor.getTutor().getLocation());
+//        tutorDTO.setName((postByTutor.getTutor().getBirth()));
+//        tutorDTO.setId(postByTutor.getTutor().getId());
+//
+        if ((tutorId >= 24) && (tutorId <= 46)) {
+            Messsage messsage = new Messsage();
+//            messsage.setState(false);
+            messsage.setContact(messsageDTO.getContact());
+            messsage.setEmail(messsageDTO.getEmail());
+            messsage.setDetailRequest(messsageDTO.getDetailRequest());
+            messsage.setTutor(tutorRepository.findById((long) 48));
+            messsage.setTimeSend(dateFormat.format(date));
+            messsageRepository.save(messsage);
+            MesssageDTO dto = new MesssageDTO();
+            dto.setId(messsage.getId());
+            dto.setContact(messsage.getContact());
+            dto.setEmail(messsage.getEmail());
+            dto.setDetailRequest(messsage.getDetailRequest());
+//            dto.setState(messsage.getState());
+            return dto;
+        } else {
+            Messsage messsage = new Messsage();
+//            messsage.setState(false);
+            messsage.setContact(messsageDTO.getContact());
+            messsage.setEmail(messsageDTO.getEmail());
+            messsage.setTimeSend(dateFormat.format(date));
+            messsage.setDetailRequest(messsageDTO.getDetailRequest());
+            messsage.setTutor(tutor);
+            messsageRepository.save(messsage);
 
-        MesssageDTO dto = new MesssageDTO();
-        dto.setId(messsage.getId());
-        dto.setContact(messsage.getContact());
-        dto.setEmail(messsage.getEmail());
-        dto.setDetailRequest(messsage.getDetailRequest());
-        dto.setState(messsage.getState());
-        return dto;
+            MesssageDTO dto = new MesssageDTO();
+            dto.setId(messsage.getId());
+            dto.setContact(messsage.getContact());
+            dto.setEmail(messsage.getEmail());
+            dto.setDetailRequest(messsage.getDetailRequest());
+//            dto.setState(messsage.getState());
+            dto.setTimeSend(messsage.getTimeSend());
+            return dto;
+        }
+
     }
+
+
 }

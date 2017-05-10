@@ -16,7 +16,6 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class TutorService {
     }
 
     public PostByTutorDTO createPostTutor(String token, PostByTutorDTO tutorDTO) {
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM");
         Date date = new Date();
         User user = userRepository.findByToken(token);
         Tutor tutor = tutorRepository.findById(user.getTutor().getId());
@@ -101,7 +100,7 @@ public class TutorService {
 
 
     public PostByTutorDTO editPostTutor(String token, Long id, PostByTutorDTO tutorDTO) {
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM");
         Date date = new Date();
         User user = userRepository.findByToken(token);
         Tutor tutor = tutorRepository.findById(user.getTutor().getId());
@@ -130,7 +129,7 @@ public class TutorService {
         return tutorDTO;
     }
 
-    public String deletePostTutor(String token, Long id) {
+    public void deletePostTutor(String token, Long id) {
         User user = userRepository.findByToken(token);
 
 //        if (postTutorRepository.findById(id) != null) {
@@ -145,8 +144,7 @@ public class TutorService {
         if (userRepository.findByToken(token) != null) {
             PostByTutor postByTutor = postTutorRepository.findById(id);
             postTutorRepository.delete(postByTutor);
-            return "Delete Success";
-        } else return "Not Permission";
+        } else throw new NullPointerException("Tutor khong ton tai");
 
 
     }
@@ -165,8 +163,16 @@ public class TutorService {
             postByTutorDTO.setClassLevel(postByTutor.getLevelClass());
             postByTutorDTO.setImagePost(postByTutor.getImagePost());
             postByTutorDTO.setId(postByTutor.getId());
-            postByTutorDTO.setImagePost(postByTutor.getImagePost());
-            postByTutorDTO.setTutor(postByTutor.getTutor());
+
+
+            TutorDTO tutorDTO = new TutorDTO();
+            tutorDTO.setId(postByTutor.getTutor().getId());
+            tutorDTO.setBirth(postByTutor.getTutor().getBirth());
+            tutorDTO.setCurrentJob(postByTutor.getTutor().getCurrentJob());
+            tutorDTO.setLocation(postByTutor.getTutor().getLocation());
+            tutorDTO.setName((postByTutor.getTutor().getName()));
+
+            postByTutorDTO.setTutor(tutorDTO);
             postByTutorDTO.setLat(postByTutor.getLat());
             postByTutorDTO.setLng(postByTutor.getLng());
             postByTutorDTOs.add(postByTutorDTO);
@@ -192,7 +198,7 @@ public class TutorService {
                 postByTutorDTO.setId(postByTutor.getId());
                 postByTutorDTO.setLat(postByTutor.getLat());
                 postByTutorDTO.setLng(postByTutor.getLng());
-                postByTutorDTO.setImagePost(postByTutor.getImagePost());
+
 
 
                 postByTutorDTOs.add(postByTutorDTO);
@@ -283,7 +289,13 @@ public class TutorService {
         postByTutorDTO.setImagePost(postByTutor.getImagePost());
         postByTutorDTO.setId(postByTutor.getId());
         postByTutorDTO.setImagePost(postByTutor.getImagePost());
-        postByTutorDTO.setTutor(postByTutor.getTutor());
+        TutorDTO tutorDTO = new TutorDTO();
+        tutorDTO.setBirth(postByTutor.getTutor().getBirth());
+        tutorDTO.setCurrentJob(postByTutor.getTutor().getCurrentJob());
+        tutorDTO.setLocation(postByTutor.getTutor().getLocation());
+        tutorDTO.setName((postByTutor.getTutor().getName()));
+        tutorDTO.setId(postByTutor.getTutor().getId());
+        postByTutorDTO.setTutor(tutorDTO);
         postByTutorDTO.setLat(postByTutor.getLat());
         postByTutorDTO.setLng(postByTutor.getLng());
         return postByTutorDTO;
@@ -306,7 +318,7 @@ public class TutorService {
         return tutors;
     }
 
-    public List<PostByParent> findParentwithDistance(LocationDTO locationDTO, float distance) {
+    public List<PostByParentDTO> findParentwithDistance(LocationDTO locationDTO, float distance) {
         List<PostByParent> postByParents = (List<PostByParent>) postParentRepository.findAll();
         List<PostByParent> result = new ArrayList<PostByParent>();
         for (int i = 0; i < postByParents.size(); i++) {
@@ -318,10 +330,26 @@ public class TutorService {
                 result.add(postByParents.get(i));
             }
         }
-        return result;
+        List<PostByParentDTO> postByParentDTOS = new ArrayList<PostByParentDTO>();
+        for(PostByParent postByParent : result){
+            PostByParentDTO postByParentDTO = new PostByParentDTO();
+            postByParentDTO.setContact(postByParent.getContact());
+            postByParentDTO.setSalaryDesired(postByParent.getSalaryDesired());
+            postByParentDTO.setLocationDesired(postByParent.getLocationDesired());
+            postByParentDTO.setTimes(postByParent.getTimes());
+            postByParentDTO.setClassRequirement(postByParent.getClassRequirement());
+            postByParentDTO.setPeriod(postByParent.getPeriod());
+            postByParentDTO.setSubject(postByParent.getSubject());
+            postByParentDTO.setId(postByParent.getId());
+            postByParentDTO.setLat(postByParent.getLat());
+            postByParentDTO.setLng(postByParent.getLng());
+            postByParentDTO.setClassLevel(postByParent.getClassLevel());
+            postByParentDTOS.add(postByParentDTO);
+        }
+        return postByParentDTOS;
     }
 
-    public List<PostByParent> findParentwithDistanceNoLatLong(LocationDTO locationDTO, float distance) {
+    public List<PostByParentDTO> findParentwithDistanceNoLatLong(LocationDTO locationDTO, float distance) {
         List<PostByParent> postByParents = (List<PostByParent>) postParentRepository.findAll();
         List<PostByParent> result = new ArrayList<PostByParent>();
         GoogleMapResult latLng = userService.getLatLng(locationDTO);
@@ -341,7 +369,23 @@ public class TutorService {
                 result.add(postByParents.get(i));
             }
         }
-        return result;
+        List<PostByParentDTO> postByParentDTOS = new ArrayList<PostByParentDTO>();
+        for(PostByParent postByParent : result){
+            PostByParentDTO postByParentDTO = new PostByParentDTO();
+            postByParentDTO.setContact(postByParent.getContact());
+            postByParentDTO.setSalaryDesired(postByParent.getSalaryDesired());
+            postByParentDTO.setLocationDesired(postByParent.getLocationDesired());
+            postByParentDTO.setTimes(postByParent.getTimes());
+            postByParentDTO.setClassRequirement(postByParent.getClassRequirement());
+            postByParentDTO.setPeriod(postByParent.getPeriod());
+            postByParentDTO.setSubject(postByParent.getSubject());
+            postByParentDTO.setId(postByParent.getId());
+            postByParentDTO.setLat(postByParent.getLat());
+            postByParentDTO.setLng(postByParent.getLng());
+            postByParentDTO.setClassLevel(postByParent.getClassLevel());
+            postByParentDTOS.add(postByParentDTO);
+        }
+        return postByParentDTOS;
     }
 
 
@@ -362,6 +406,7 @@ public class TutorService {
                 messsageDTO.setEmail(messsages.get(i).getEmail());
                 messsageDTO.setDetailRequest(messsages.get(i).getDetailRequest());
                 messsageDTO.setState(messsages.get(i).getState());
+                messsageDTO.setTimeSend(messsages.get(i).getTimeSend());
                 messsageDTOs.add(messsageDTO);
             }
             return messsageDTOs;
@@ -369,12 +414,11 @@ public class TutorService {
             throw new NullPointerException("user khong hop le ");
     }
 
-    public String removeMessage(Long id, String token) {
+    public void removeMessage(Long id, String token) {
         User user = userRepository.findByToken(token);
         Messsage messsage = messsageRepository.findById(id);
         if (user.getTutor().equals(messsage.getTutor())) {
             messsageRepository.delete(messsage);
-            return "DELETE SUCCESS";
         } else throw new NullPointerException("user khong hop le ");
     }
 
@@ -392,11 +436,11 @@ public class TutorService {
         } else throw new NullPointerException("user khong hop le ");
     }
 
-    public MesssageDTO setStateMessage(Long id, String token, StateDTO aBoolean) {
+    public MesssageDTO setStateMessage(Long id, String token) {
         User user = userRepository.findByToken(token);
         Messsage messsage = messsageRepository.findById(id);
         if (user.getTutor().equals(messsage.getTutor())) {
-            messsage.setState(aBoolean.getaBoolean());
+            messsage.setState(true);
             messsageRepository.save(messsage);
             MesssageDTO messsageDTO = new MesssageDTO();
             messsageDTO.setId(messsage.getId());

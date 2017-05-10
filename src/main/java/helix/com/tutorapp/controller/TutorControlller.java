@@ -1,7 +1,6 @@
 package helix.com.tutorapp.controller;
 
 import helix.com.tutorapp.dto.*;
-import helix.com.tutorapp.model.entity.Messsage;
 import helix.com.tutorapp.model.entity.PostByParent;
 import helix.com.tutorapp.model.entity.PostByTutor;
 import helix.com.tutorapp.model.entity.Tutor;
@@ -53,9 +52,9 @@ public class TutorControlller {
 
     //delete Post theo ID
     @RequestMapping(value = "/deletePostTutor/{id}", method = RequestMethod.DELETE)
-    public String deletePostTutor(@PathVariable("id") Long id, HttpServletRequest request) {
+    public void deletePostTutor(@PathVariable("id") Long id, HttpServletRequest request) {
         String token = request.getHeader("auth-token");
-        return tutorService.deletePostTutor(token, id);
+         tutorService.deletePostTutor(token, id);
     }
 
     //List all Post
@@ -100,12 +99,12 @@ public class TutorControlller {
     }
 
     @RequestMapping(value = "tutor/findParent", method = RequestMethod.POST)
-    public List<PostByParent> findParentwithDistance(@RequestBody LocationDTO locationDTO, @RequestParam("distance") float distance) {
+    public List<PostByParentDTO> findParentwithDistance(@RequestBody LocationDTO locationDTO, @RequestParam("distance") float distance) {
         return tutorService.findParentwithDistance(locationDTO, distance);
     }
 
     @RequestMapping(value = "tutor/findParentNoLatLong", method = RequestMethod.POST)
-    public List<PostByParent> findParentwithDistanceNoLatLong(@RequestBody LocationDTO locationDTO, @RequestParam("distance") float distance) {
+    public List<PostByParentDTO> findParentwithDistanceNoLatLong(@RequestBody LocationDTO locationDTO, @RequestParam("distance") float distance) {
         return tutorService.findParentwithDistanceNoLatLong(locationDTO, distance);
     }
 
@@ -128,7 +127,7 @@ public class TutorControlller {
     @RequestMapping(value = "/getAllMessages", method = RequestMethod.GET)
     public List<MesssageDTO> getAllMesssages(HttpServletRequest request) {
         String token = request.getHeader("auth-token");
-        return tutorService.getAllMessages( token);
+        return tutorService.getAllMessages(token);
     }
 
     //getMessageDetail
@@ -140,17 +139,17 @@ public class TutorControlller {
 
     //removeMessage
     @RequestMapping(value = "/removeMessage/{id}", method = RequestMethod.DELETE)
-    public String removeMessage(@PathVariable("id") Long id, HttpServletRequest request) {
+    public void removeMessage(@PathVariable("id") Long id, HttpServletRequest request) {
         String token = request.getHeader("auth-token");
-        return tutorService.removeMessage(id, token);
+        tutorService.removeMessage(id, token);
     }
 
     //
     //setStateMessage
     @RequestMapping(value = "/updateStateMessage/{id}", method = RequestMethod.PUT)
-    public MesssageDTO setStateMessage(@PathVariable("id") Long id, HttpServletRequest request, @RequestBody StateDTO stateDTO) {
+    public MesssageDTO setStateMessage(@PathVariable("id") Long id, HttpServletRequest request) {
         String token = request.getHeader("auth-token");
-        return tutorService.setStateMessage(id, token,stateDTO);
+        return tutorService.setStateMessage(id, token);
     }
 }
 

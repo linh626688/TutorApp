@@ -15,4 +15,6 @@ public interface PostTutorRepository extends CrudRepository<PostByTutor, Long> {
     PostByTutor findByIdAndTutorId(Long postId, Long tutorId);
 
     List<PostByTutor> findByTutorId(Long tutorId);
+
+    List<PostByTutor> findAll();
 }

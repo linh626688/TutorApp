@@ -4,9 +4,9 @@ import helix.com.tutorapp.api.googlemapresponse.GoogleMapResult;
 import helix.com.tutorapp.dto.LocationDTO;
 import helix.com.tutorapp.dto.ParentDTO;
 import helix.com.tutorapp.dto.PostByParentDTO;
+import helix.com.tutorapp.dto.PostByTutorDTO;
 import helix.com.tutorapp.model.entity.Parent;
 import helix.com.tutorapp.model.entity.PostByParent;
-import helix.com.tutorapp.model.entity.PostByTutor;
 import helix.com.tutorapp.service.impl.ParentService;
 import helix.com.tutorapp.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,17 +89,17 @@ public class ParentController {
     }
 
     @RequestMapping(value = "parent/findTutor", method = RequestMethod.POST)
-    public List<PostByTutor> findTutorwithDistance(@RequestBody LocationDTO locationDTO, @RequestParam("distance") float distance) {
+    public List<PostByTutorDTO> findTutorwithDistance(@RequestBody LocationDTO locationDTO, @RequestParam("distance") float distance) {
         return parentService.findParentwithDistance(locationDTO, distance);
     }
 
     @RequestMapping(value = "parent/findTutorNoLatLong", method = RequestMethod.POST)
-    public List<PostByTutor> findTutotrwithDistanceNoLatLong(@RequestBody LocationDTO locationDTO, @RequestParam("distance") float distance) {
+    public List<PostByTutorDTO> findTutotrwithDistanceNoLatLong(@RequestBody LocationDTO locationDTO, @RequestParam("distance") float distance) {
         return parentService.findTutotrwithDistanceNoLatLong(locationDTO, distance);
     }
 
     @RequestMapping(value = "getAllParent", method = RequestMethod.GET)
-    public List<Parent> getAllParent(){
+    public List<Parent> getAllParent() {
         return parentService.getAllParent();
     }
 }

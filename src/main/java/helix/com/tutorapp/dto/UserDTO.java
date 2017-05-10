@@ -13,23 +13,22 @@ public class UserDTO {
     private Long id;
     private Role role;
     private String token;
-    private Tutor tutor;
-    private Parent parent;
+    private TutorDTO tutor;
+    private ParentDTO parent;
 
-
-    public Tutor getTutor() {
+    public TutorDTO getTutor() {
         return tutor;
     }
 
-    public void setTutor(Tutor tutor) {
+    public void setTutor(TutorDTO tutor) {
         this.tutor = tutor;
     }
 
-    public Parent getParent() {
+    public ParentDTO getParent() {
         return parent;
     }
 
-    public void setParent(Parent parent) {
+    public void setParent(ParentDTO parent) {
         this.parent = parent;
     }
 

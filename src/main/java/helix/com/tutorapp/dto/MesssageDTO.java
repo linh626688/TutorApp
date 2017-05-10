@@ -13,6 +13,7 @@ public class MesssageDTO {
     private String email;
     private String detailRequest;
     private Tutor tutor;
+    private String timeSend;
 
     public Long getId() {
         return id;
@@ -20,6 +21,14 @@ public class MesssageDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTimeSend() {
+        return timeSend;
+    }
+
+    public void setTimeSend(String timeSend) {
+        this.timeSend = timeSend;
     }
 
     public Boolean getState() {
