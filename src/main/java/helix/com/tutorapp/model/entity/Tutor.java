@@ -27,13 +27,13 @@ public class Tutor {
 //                    @JoinColumn(name = "tutor_id", referencedColumnName = "id")
 //            },
 //            joinColumns = {
-//                    @JoinColumn(name = "postbytutor_id", referencedColumnName = "id")
+//                    @Joinn(name = "postbytutor_id", referencedColumnName = "id")
 //            }
 //    )
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "tutor")
     private List<PostByTutor> postByTutor = new ArrayList<PostByTutor>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tutor")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "tutor")
     private List<Messsage> messsageList = new ArrayList<Messsage>();
 
     public List<Messsage> getMesssageList() {

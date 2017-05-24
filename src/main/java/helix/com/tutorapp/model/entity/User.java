@@ -1,5 +1,7 @@
 package helix.com.tutorapp.model.entity;
 
+import javafx.beans.DefaultProperty;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private Role role;
 
     private String token;
@@ -23,9 +26,11 @@ public class User {
     private Date tokenExpiry;
 
     @OneToOne
+    @JoinColumn(name="tutor_id")
     private Tutor tutor;
 
     @OneToOne
+    @JoinColumn(name="parent_id")
     private Parent parent;
 
 

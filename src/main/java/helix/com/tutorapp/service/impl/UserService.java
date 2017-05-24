@@ -58,6 +58,8 @@ public class UserService {
             if (userDTO.getRole() == Role.TUTOR) {
                 Tutor tutor = new Tutor();
                 tutorRepository.save(tutor);
+//                TutorDTO tutorDTO = new TutorDTO();
+//                tutorDTO.setId(tutor.getId());
                 user.setTutor(tutor);
             } else if (userDTO.getRole() == Role.PARENT) {
                 Parent parent = new Parent();
